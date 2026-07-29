@@ -1,4 +1,4 @@
-# 🚀 HireSense AI
+# 🚀 NipunHire AI
 
 > An Explainable AI Platform for Intelligent Resume Screening and Adaptive Interview Assessment.
 
@@ -12,7 +12,7 @@
 
 ## 📌 Overview
 
-HireSense AI is a full-stack recruitment and career-growth platform that helps candidates and recruiters manage the hiring journey in one place. It combines PDF resume analysis, transparent ATS-style scoring, skill-gap matching, job and application tracking, interview workflows, and career-development tools.
+NipunHire AI is a full-stack recruitment and career-growth platform that helps candidates and recruiters manage the hiring journey in one place. It combines PDF resume analysis, transparent ATS-style scoring, skill-gap matching, job and application tracking, interview workflows, and career-development tools.
 
 The platform focuses on **explainability**. Rather than returning only an opaque score, it shows the extracted skills, matched and missing job requirements, quality breakdown, strengths, weaknesses, and actionable recommendations.
 
