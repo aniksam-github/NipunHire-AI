@@ -39,6 +39,9 @@ export const registerSchema = z.object({
     .string()
     .min(1, "Please confirm your password"),
   role: z.enum(["recruiter", "candidate"]),
+  terms_accepted: z.boolean().refine((value) => value, {
+    message: "You must agree to the Terms of Service and Privacy Policy",
+  }),
 }).refine((data) => data.password === data.confirm_password, {
   message: "Passwords do not match",
   path: ["confirm_password"],

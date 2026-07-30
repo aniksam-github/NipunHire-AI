@@ -1,5 +1,5 @@
 """
-Domain-specific exceptions for HireSense AI.
+Domain-specific exceptions for NipunHire AI.
 
 These are business-logic exceptions — they carry semantic meaning
 ("duplicate email", "invalid credentials") but know nothing about HTTP.
@@ -10,12 +10,12 @@ service layer stays framework-agnostic and testable without FastAPI.
 """
 
 
-class HireSenseException(Exception):
+class NipunHireException(Exception):
     """
-    Base exception for all HireSense domain errors.
+    Base exception for all NipunHire domain errors.
 
     Every custom exception inherits from this, so a single
-    `except HireSenseException` in the API layer catches all
+    `except NipunHireException` in the API layer catches all
     domain-level failures without accidentally swallowing
     unrelated system errors (KeyError, ValueError, etc.).
     """
@@ -25,21 +25,21 @@ class HireSenseException(Exception):
         super().__init__(self.detail)
 
 
-class DuplicateEntityError(HireSenseException):
+class DuplicateEntityError(NipunHireException):
     """Raised when attempting to create an entity that already exists (e.g., duplicate email)."""
 
     def __init__(self, entity: str = "Entity", field: str = "identifier"):
         super().__init__(detail=f"{entity} with this {field} already exists")
 
 
-class AuthenticationError(HireSenseException):
+class AuthenticationError(NipunHireException):
     """Raised when authentication fails (wrong password, expired token, etc.)."""
 
     def __init__(self, detail: str = "Invalid credentials"):
         super().__init__(detail=detail)
 
 
-class EntityNotFoundError(HireSenseException):
+class EntityNotFoundError(NipunHireException):
     """Raised when a requested entity does not exist in the database."""
 
     def __init__(self, entity: str = "Entity", identifier: str = ""):
@@ -49,7 +49,7 @@ class EntityNotFoundError(HireSenseException):
         super().__init__(detail=detail)
 
 
-class AuthorizationError(HireSenseException):
+class AuthorizationError(NipunHireException):
     """Raised when a user lacks permission for the requested action."""
 
     def __init__(self, detail: str = "Insufficient permissions"):

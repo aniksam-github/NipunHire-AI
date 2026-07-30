@@ -8,6 +8,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+class PDFExtractionError(ValueError):
+    """Raised when a PDF cannot provide usable machine-readable text."""
+
+
 def extract_text_from_pdf_bytes(pdf_bytes: bytes) -> tuple[str, int]:
     """
     Opens PDF bytes using PyMuPDF and extracts clean concatenated text.
@@ -28,12 +32,18 @@ def extract_text_from_pdf_bytes(pdf_bytes: bytes) -> tuple[str, int]:
                 text_content.append(page_text)
 
         full_text = "\n".join(text_content).strip()
+        if not full_text:
+            raise PDFExtractionError(
+                "PDF contains no extractable text; upload a text-based PDF rather than a scanned image."
+            )
         logger.info("Extracted %d characters across %d pages via PyMuPDF", len(full_text), page_count)
         return full_text, page_count
 
+    except PDFExtractionError:
+        raise
     except Exception as exc:
         logger.error("PyMuPDF PDF extraction failed: %s", exc)
-        raise ValueError("Could not read PDF file. File may be corrupted or encrypted.") from exc
+        raise PDFExtractionError("Could not read PDF file. File may be corrupted or encrypted.") from exc
 
     finally:
         if doc is not None:

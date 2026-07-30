@@ -22,6 +22,7 @@ import { CareerGrowthPage } from "@/features/career-growth/components/career-gro
 import { CodingPracticePage } from "@/features/coding-practice/components/coding-practice-page";
 import { CareerCoachPage } from "@/features/career-coach/components/career-coach-page";
 import { NotificationCenterPage } from "@/features/notifications/components/notification-center-page";
+import { LegalPage } from "@/features/legal/components/legal-page";
 
 // ---------------------------------------------------------------------------
 // Page layouts & Placeholders for future feature steps
@@ -195,7 +196,7 @@ function HomePage() {
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-border/50 py-6 text-center text-xs text-muted-foreground bg-background/80 backdrop-blur-md">
-        HireSense AI &copy; 2026. Production-Grade Candidate Evaluation Architecture.
+        NipunHire AI &copy; 2026. Production-Grade Candidate Evaluation Architecture.
       </footer>
     </div>
   );
@@ -210,6 +211,9 @@ export function AppRouter() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<HomePage />} />
+      <Route path="/terms" element={<LegalPage title="Terms of Service" />} />
+      <Route path="/privacy-policy" element={<LegalPage title="Privacy Policy" />} />
+      <Route path="/cookie-policy" element={<LegalPage title="Cookie Policy" />} />
       <Route
         path="/login"
         element={

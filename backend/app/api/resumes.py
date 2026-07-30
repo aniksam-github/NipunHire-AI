@@ -6,14 +6,20 @@ ATS scorecard retrieval, and deletion.
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, status
 
 from app.core.dependencies import get_current_user
+from app.core.resume_exceptions import (
+    ResumeExtractionError,
+    ResumeParsingError,
+    ResumeSummaryError,
+    ResumeUploadError,
+)
+from app.core.screening_exceptions import ResumeScreeningError
 from app.models.user import User
 from app.schemas.resume import ResumeResponse
 from app.services import resume_service
+from app.services import resume_screening_service
+from app.schemas.resume_screening import ResumeScreeningResponse
 
 router = APIRouter(prefix="/resumes", tags=["Resume Center"])
-
-MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB limit
-
 
 @router.post(
     "/upload",
@@ -29,24 +35,40 @@ async def upload_resume(
     Uploads a candidate PDF resume file, extracts text via PyMuPDF, parses skills & contact info,
     calculates ATS health score, and stores the resume analysis.
     """
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Only PDF resume files (.pdf) are supported.",
-        )
-
     file_bytes = await file.read()
-    if len(file_bytes) > MAX_FILE_SIZE_BYTES:
+    try:
+        return await resume_service.process_and_save_resume(
+            filename=file.filename or "",
+            content_type=file.content_type,
+            file_bytes=file_bytes,
+            candidate_id=str(current_user.id),
+        )
+    except ResumeUploadError as exc:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="File size exceeds the 5 MB limit.",
-        )
+            detail=str(exc),
+        ) from exc
+    except ResumeExtractionError as exc:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
+    except (ResumeParsingError, ResumeSummaryError) as exc:
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
 
-    return await resume_service.process_and_save_resume(
-        filename=file.filename,
-        file_bytes=file_bytes,
-        candidate_id=str(current_user.id),
-    )
+
+@router.post(
+    "/{resume_id}/screen",
+    response_model=ResumeScreeningResponse,
+    summary="Analyze an already-parsed resume profile",
+)
+async def screen_resume(resume_id: str, current_user: User = Depends(get_current_user)):
+    """Run Phase 3 analysis, categorized skill extraction, and improvements."""
+    try:
+        return await resume_screening_service.screen_resume(resume_id, str(current_user.id))
+    except EntityNotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.detail) from exc
+    except AuthorizationError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.detail) from exc
+    except ResumeScreeningError as exc:
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
 
 
 @router.get(

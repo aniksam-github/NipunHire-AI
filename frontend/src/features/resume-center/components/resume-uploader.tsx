@@ -3,6 +3,7 @@
  */
 
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { UploadCloud, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useUploadResume as useUploadResumeHook } from "../hooks/use-resumes";
@@ -14,6 +15,7 @@ interface ResumeUploaderProps {
 export function ResumeUploader({ onSuccess }: ResumeUploaderProps) {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [processingAcknowledged, setProcessingAcknowledged] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const uploadMutation = useUploadResumeHook();
@@ -67,6 +69,7 @@ export function ResumeUploader({ onSuccess }: ResumeUploaderProps) {
     uploadMutation.mutate(selectedFile, {
       onSuccess: () => {
         setSelectedFile(null);
+        setProcessingAcknowledged(false);
         onSuccess?.();
       },
     });
@@ -84,6 +87,22 @@ export function ResumeUploader({ onSuccess }: ResumeUploaderProps) {
             PyMuPDF text extraction & ATS score analysis engine
           </p>
         </div>
+      </div>
+
+      <div className="rounded-xl border border-fuchsia-500/30 bg-fuchsia-500/10 p-3">
+        <label htmlFor="ai-processing-acknowledged" className="flex cursor-pointer items-start gap-2.5 text-xs leading-5 text-foreground">
+          <input
+            id="ai-processing-acknowledged"
+            type="checkbox"
+            checked={processingAcknowledged}
+            onChange={(event) => setProcessingAcknowledged(event.target.checked)}
+            className="mt-0.5 size-4 accent-fuchsia-600"
+          />
+          <span>
+            I understand that my resume and personal information will be processed by AI/LLM services, including the OpenAI API, for resume screening. See the{" "}
+            <Link to="/privacy-policy" target="_blank" rel="noreferrer" className="font-semibold text-fuchsia-400 underline">Privacy Policy</Link>.
+          </span>
+        </label>
       </div>
 
       {/* Drag and Drop Zone */}
@@ -140,7 +159,7 @@ export function ResumeUploader({ onSuccess }: ResumeUploaderProps) {
           </Button>
           <Button
             onClick={handleUpload}
-            disabled={uploadMutation.isPending}
+            disabled={uploadMutation.isPending || !processingAcknowledged}
             className="rounded-xl bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold gap-2 shadow-md"
           >
             {uploadMutation.isPending ? (

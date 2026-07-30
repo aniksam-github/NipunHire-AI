@@ -22,6 +22,9 @@ class Resume(Document):
     page_count: int = Field(default=1)
 
     raw_text: str = Field(default="")
+    processing_status: str = Field(default="uploaded")
+    processing_error: str | None = None
+    profile_id: PydanticObjectId | None = None
 
     # Parsed structured attributes
     parsed_name: Optional[str] = None

@@ -1,4 +1,4 @@
-# 🚀 HireSense AI
+# 🚀 NipunHire AI
 
 > An Explainable AI Platform for Intelligent Resume Screening and Adaptive Interview Assessment.
 
@@ -12,7 +12,7 @@
 
 ## 📌 Overview
 
-HireSense AI is a full-stack recruitment and career-growth platform that helps candidates and recruiters manage the hiring journey in one place. It combines PDF resume analysis, transparent ATS-style scoring, skill-gap matching, job and application tracking, interview workflows, and career-development tools.
+NipunHire AI is a full-stack recruitment and career-growth platform that helps candidates and recruiters manage the hiring journey in one place. It combines PDF resume analysis, transparent ATS-style scoring, skill-gap matching, job and application tracking, interview workflows, and career-development tools.
 
 The platform focuses on **explainability**. Rather than returning only an opaque score, it shows the extracted skills, matched and missing job requirements, quality breakdown, strengths, weaknesses, and actionable recommendations.
 
@@ -89,12 +89,12 @@ The platform focuses on **explainability**. Rather than returning only an opaque
 ## 📂 Project Structure
 
 ```text
-hiresense/
+nipunhire/
 ├── README.md
 ├── pyproject.toml
 ├── uv.lock
 ├── research data/                 # Research papers and references
-└── hireSence AI/
+└── NipunHire AI/
     ├── backend/
     │   ├── .env.example           # Backend environment template
     │   └── app/
@@ -145,13 +145,13 @@ The backend is organised into API routers, services, repositories, models, and s
 
 ```bash
 git clone <your-repository-url>
-cd hiresense
+cd nipunhire
 ```
 
 ### 2. Configure the backend
 
 ```bash
-cd "hireSence AI"
+cd "NipunHire AI"
 python -m venv .venv
 ```
 
@@ -181,7 +181,7 @@ Update `backend/.env` with secure values:
 
 ```env
 MONGODB_URI=mongodb://localhost:27017
-DATABASE_NAME=hiresense_ai
+DATABASE_NAME=nipunhire_ai
 JWT_SECRET=replace_with_a_long_random_secret
 ALLOWED_ORIGINS=["http://localhost:5173"]
 ```
@@ -197,7 +197,7 @@ The API runs at `http://localhost:8000`.
 
 ### 3. Configure the frontend
 
-Open a new terminal in `hireSence AI/frontend`:
+Open a new terminal in `NipunHire AI/frontend`:
 
 ```bash
 npm install
@@ -264,10 +264,10 @@ All API routes use the `/api/v1` prefix. Authenticated endpoints require an `Aut
 
 | Directory | Command | Description |
 | --- | --- | --- |
-| `hireSence AI/frontend` | `npm run dev` | Start the frontend development server |
-| `hireSence AI/frontend` | `npm run build` | Type-check and create a production build |
-| `hireSence AI/frontend` | `npm run lint` | Run frontend linting |
-| `hireSence AI/backend` | `uvicorn app.main:app --reload` | Start the backend in development mode |
+| `NipunHire AI/frontend` | `npm run dev` | Start the frontend development server |
+| `NipunHire AI/frontend` | `npm run build` | Type-check and create a production build |
+| `NipunHire AI/frontend` | `npm run lint` | Run frontend linting |
+| `NipunHire AI/backend` | `uvicorn app.main:app --reload` | Start the backend in development mode |
 
 ---
 

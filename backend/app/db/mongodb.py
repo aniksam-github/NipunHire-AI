@@ -31,6 +31,8 @@ def _get_document_models() -> list:
     from app.models.user import User
     from app.models.job import Job
     from app.models.resume import Resume
+    from app.models.resume_profile import ResumeProfile
+    from app.models.resume_screening import ResumeScreening
     from app.models.profile import Profile
     from app.models.matching import JobMatch
     from app.models.application import Application
@@ -44,6 +46,8 @@ def _get_document_models() -> list:
         User,
         Job,
         Resume,
+        ResumeProfile,
+        ResumeScreening,
         Profile,
         JobMatch,
         Application,

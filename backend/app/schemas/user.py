@@ -26,7 +26,7 @@ class UserCreate(BaseModel):
     email: EmailStr = Field(
         ...,
         description="User's email address. Must be unique across the system.",
-        examples=["recruiter@hiresense.ai"],
+        examples=["recruiter@nipunhire.ai"],
     )
     password: str = Field(
         ...,
@@ -51,7 +51,7 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     """Login payload."""
 
-    email: EmailStr = Field(..., examples=["recruiter@hiresense.ai"])
+    email: EmailStr = Field(..., examples=["recruiter@nipunhire.ai"])
     password: str = Field(..., examples=["StrongP@ss123"])
 
 

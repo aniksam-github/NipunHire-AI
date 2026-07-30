@@ -58,7 +58,7 @@ class User(Document):
     class Config:
         json_schema_extra = {
             "example": {
-                "email": "recruiter@hiresense.ai",
+                "email": "recruiter@nipunhire.ai",
                 "hashed_password": "$2b$12$...",
                 "full_name": "Jane Doe",
                 "role": "recruiter",

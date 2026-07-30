@@ -38,6 +38,7 @@ export function RegisterForm() {
       password: "",
       confirm_password: "",
       role: "recruiter",
+      terms_accepted: false,
     },
   });
 
@@ -84,7 +85,7 @@ export function RegisterForm() {
               Create Your <span className="text-fuchsia-400">Account</span>
             </CardTitle>
             <CardDescription className="text-foreground/80 text-sm font-medium">
-              Join HireSense AI to evaluate candidates with precision
+              Join NipunHire AI to evaluate candidates with precision
             </CardDescription>
           </div>
         </CardHeader>
@@ -240,6 +241,25 @@ export function RegisterForm() {
                   <span>Candidate</span>
                 </label>
               </div>
+            </div>
+
+            <div className="space-y-1 pt-1">
+              <label htmlFor="terms-accepted" className="flex cursor-pointer items-start gap-2.5 text-xs leading-5 text-foreground/85">
+                <input
+                  id="terms-accepted"
+                  type="checkbox"
+                  className="mt-1 size-4 accent-fuchsia-600"
+                  aria-invalid={!!errors.terms_accepted}
+                  {...register("terms_accepted")}
+                />
+                <span>
+                  I agree to the{" "}
+                  <Link to="/terms" target="_blank" rel="noreferrer" className="font-semibold text-fuchsia-400 underline">Terms of Service</Link>{" "}
+                  and{" "}
+                  <Link to="/privacy-policy" target="_blank" rel="noreferrer" className="font-semibold text-fuchsia-400 underline">Privacy Policy</Link>.
+                </span>
+              </label>
+              {errors.terms_accepted && <p className="text-xs font-semibold text-destructive">{errors.terms_accepted.message}</p>}
             </div>
 
             {/* Submit Button */}

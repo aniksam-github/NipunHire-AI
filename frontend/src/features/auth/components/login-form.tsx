@@ -69,7 +69,7 @@ export function LoginForm() {
               Welcome <span className="text-fuchsia-400">Back</span>
             </CardTitle>
             <CardDescription className="text-foreground/80 text-sm font-medium">
-              Access your HireSense candidate evaluation suite
+              Access your NipunHire candidate evaluation suite
             </CardDescription>
           </div>
         </CardHeader>
@@ -134,7 +134,7 @@ export function LoginForm() {
                   <span>Authenticating...</span>
                 </span>
               ) : (
-                "Sign In to HireSense"
+                "Sign In to NipunHire"
               )}
             </Button>
           </form>

@@ -16,12 +16,12 @@ class Settings(BaseSettings):
     """
 
     # ---- Project Metadata ----
-    PROJECT_NAME: str = "HireSense AI"
+    PROJECT_NAME: str = "NipunHire AI"
     VERSION: str = "0.1.0"
     ENVIRONMENT: str = Field(default="development")  # development | staging | production
     # Avoid the generic DEBUG variable, which is commonly set by tooling to
     # non-boolean values (for example, "release").
-    DEBUG: bool = Field(default=False, validation_alias="HIRESENSE_DEBUG")
+    DEBUG: bool = Field(default=False, validation_alias="NIPUNHIRE_DEBUG")
 
     # ---- Database ----
     MONGODB_URI: str
@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     # ---- AI ----
     GEMINI_API_KEY: SecretStr = Field(default=SecretStr("your_gemini_api_key_here"))
     OPENAI_API_KEY: SecretStr = Field(default=SecretStr("your_openai_api_key_here"))
+    OPENAI_MODEL: str = "gpt-4o-mini"
+    OPENAI_REQUEST_TIMEOUT_SECONDS: float = 30.0
+    OPENAI_MAX_RETRIES: int = 3
 
     # ---- CORS (comma-separated in .env, parsed to list) ----
     ALLOWED_ORIGINS: list[str] = ["http://localhost:3000"]

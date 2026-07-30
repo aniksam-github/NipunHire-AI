@@ -45,7 +45,7 @@ async def apply_for_job(candidate_id: str, data: ApplicationCreate) -> Applicati
     res_oid = PydanticObjectId(data.resume_id) if data.resume_id else None
 
     now = datetime.now(timezone.utc)
-    initial_event = TimelineEvent(status=ApplicationStatus.APPLIED, timestamp=now, note="Applied via HireSense AI Portal")
+    initial_event = TimelineEvent(status=ApplicationStatus.APPLIED, timestamp=now, note="Applied via NipunHire AI Portal")
 
     app = Application(
         candidate_id=cand_oid,

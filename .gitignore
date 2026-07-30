@@ -27,4 +27,5 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-uploads/resumes/
+backend/uploads/
+uploads/

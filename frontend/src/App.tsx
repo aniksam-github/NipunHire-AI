@@ -8,11 +8,13 @@
 
 import { Providers } from "@/app/providers";
 import { AppRouter } from "@/app/router";
+import { ConsentBanner } from "@/shared/components/consent-banner";
 
 export function App() {
   return (
     <Providers>
       <AppRouter />
+      <ConsentBanner />
     </Providers>
   );
 }
