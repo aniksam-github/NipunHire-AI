@@ -17,7 +17,11 @@ from app.api.coding import router as coding_router
 from app.api.coach import router as coach_router
 from app.api.settings import router as settings_router
 from app.api.notifications import router as notifications_router
+from app.api.candidate_intelligence import router as candidate_intelligence_router
+from app.api.recruiter import router as recruiter_router
+from app.api.research import router as research_router
 from app.core.config import settings
+from app.core.exception_handlers import register_exception_handlers
 from app.db.mongodb import connect_to_mongo, close_mongo_connection
 
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +40,10 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     lifespan=lifespan,
+    description="NipunHire AI — Autonomous End-to-End AI Hiring & Candidate Evaluation Platform",
 )
+
+register_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,
@@ -60,6 +67,9 @@ app.include_router(coding_router, prefix="/api/v1")
 app.include_router(coach_router, prefix="/api/v1")
 app.include_router(settings_router, prefix="/api/v1")
 app.include_router(notifications_router, prefix="/api/v1")
+app.include_router(candidate_intelligence_router, prefix="/api/v1")
+app.include_router(recruiter_router, prefix="/api/v1")
+app.include_router(research_router, prefix="/api/v1")
 
 
 @app.get("/")

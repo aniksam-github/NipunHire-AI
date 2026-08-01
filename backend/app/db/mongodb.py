@@ -10,9 +10,6 @@ logger = logging.getLogger(__name__)
 class MongoDB:
     """
     Holds the Motor client instance for the app's lifetime.
-
-    Kept as a class (not bare module globals) so it's explicit state
-    that lives on one object, easy to reason about and to reset in tests.
     """
     client: AsyncIOMotorClient | None = None
 
@@ -23,10 +20,6 @@ mongodb = MongoDB()
 def _get_document_models() -> list:
     """
     Returns all Beanie Document models to register.
-
-    Kept as a function (not a module-level import list) to avoid
-    circular imports as models/ grows — models are imported lazily,
-    only when the DB actually initializes.
     """
     from app.models.user import User
     from app.models.job import Job
@@ -38,9 +31,11 @@ def _get_document_models() -> list:
     from app.models.application import Application
     from app.models.interview import InterviewSession
     from app.models.goal import CareerGoal
-    from app.models.coding import CodingSubmission
+    from app.models.coding import CodingChallenge, CodingSubmission
     from app.models.coach import CoachMessage
     from app.models.notification import Notification
+    from app.models.candidate_intelligence import ATSOptimizationSuggestion, ResumeOptimizationSuggestion
+    from app.models.research import InterviewCheatRiskReport, ResumeAnomalyReport
 
     return [
         User,
@@ -53,19 +48,20 @@ def _get_document_models() -> list:
         Application,
         InterviewSession,
         CareerGoal,
+        CodingChallenge,
         CodingSubmission,
         CoachMessage,
         Notification,
+        ResumeOptimizationSuggestion,
+        ATSOptimizationSuggestion,
+        ResumeAnomalyReport,
+        InterviewCheatRiskReport,
     ]
 
 
 async def connect_to_mongo() -> None:
     """
     Initializes the Motor client and Beanie ODM.
-
-    Called once from main.py's lifespan startup. Raises immediately
-    if the connection fails — we want the app to refuse to start
-    rather than serve requests against a dead DB.
     """
     logger.info("Connecting to MongoDB at %s", settings.DATABASE_NAME)
 
@@ -84,7 +80,7 @@ async def connect_to_mongo() -> None:
 
 async def close_mongo_connection() -> None:
     """
-    Closes the Motor client. Called from main.py's lifespan shutdown.
+    Closes the Motor client.
     """
     if mongodb.client is not None:
         mongodb.client.close()
@@ -92,12 +88,6 @@ async def close_mongo_connection() -> None:
 
 
 def get_database():
-    """
-    Accessor for the raw database handle, for cases needing direct
-    PyMongo/Motor operations outside Beanie (e.g. aggregation pipelines,
-    vector search later). Repositories should prefer Beanie models;
-    this is an escape hatch, not the default path.
-    """
     if mongodb.client is None:
         raise RuntimeError("MongoDB client not initialized. Call connect_to_mongo() first.")
     return mongodb.client[settings.DATABASE_NAME]
