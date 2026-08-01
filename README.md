@@ -1,399 +1,301 @@
+<div align="center">
+
 # 🚀 NipunHire AI
+### *Autonomous Explainable AI Hiring, Candidate Evaluation & Research Platform*
 
-> An explainable AI platform for resume intelligence, job matching, and recruitment workflows.
-
-![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.14-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green)
-![React](https://img.shields.io/badge/React-19-61DAFB)
-![MongoDB](https://img.shields.io/badge/MongoDB-8.3-green)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=apache)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![MongoDB](https://img.shields.io/badge/MongoDB-8.3-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
+[![Tests](https://img.shields.io/badge/Unit%20Tests-94%20Passing-brightgreen?style=for-the-badge&logo=pytest&logoColor=white)](#-testing--quality)
 
 ---
+
+[✨ Overview](#-overview) •
+[🏗️ Architecture](#️-architecture) •
+[⚡ Platform Modules](#-platform-modules) •
+[🚀 Quick Start](#-quick-start) •
+[📊 API Modules](#-api-modules) •
+[🔬 Research & Ethics](#-research--ethics) •
+[🗺️ Roadmap](#️-roadmap)
+
+---
+
+</div>
 
 ## 📌 Overview
 
-NipunHire AI is a full-stack recruitment and career-growth platform for candidates and recruiters. It provides PDF resume ingestion, structured resume intelligence, AI-assisted screening, explainable resume-to-job matching, job and application management, interview workflows, and career-development tools.
+**NipunHire AI** is an enterprise-grade, full-stack recruitment and candidate intelligence platform powered by transparent, audit-ready AI models. It bridges candidate career acceleration with recruiter decision support by replacing opaque black-box AI scores with **auditable factor contributions, mathematical reconciliation, and ethical human-in-the-loop disclaimers**.
 
-The platform treats automated outputs as decision-support signals. Its explainability focus is expressed through structured results: resume analysis exposes strengths, weaknesses, skill categories, and improvement suggestions; explainable matching returns named score factors, their point contributions, supporting reasons, and a recommendation derived from the audited result.
-
-## 🎬 Quick Demo / Screenshots
-
-<!-- Add product screenshots or a short demo GIF here when they are available. -->
-
-### 🎯 Objectives
-
-- Turn uploaded PDF resumes into structured candidate profiles for review and follow-up workflows.
-- Help candidates assess resume quality and role fit through structured screening and skill-gap analysis.
-- Give recruiters a central workspace for jobs, candidates, applications, interviews, and pipeline views.
-- Support candidate development through goals, coding practice, notifications, and career coaching.
-
----
-
-## ✨ Features
-
-### 🔐 Authentication and Account Management
-
-- User registration and login
-- JWT access-token and refresh-token workflow
-- Protected frontend routes and authenticated API endpoints
-- Profile editing, password changes, and account settings
-
-### 📄 Resume Intelligence
-
-- PDF-only resume upload with file-type validation and a 5 MB size limit
-- Text and page-count extraction with PyMuPDF
-- OpenAI-backed, schema-validated parsing into a structured candidate profile
-- AI-generated professional summary, candidate screening, skill categorisation, and resume-improvement suggestions
-- Resume history, retrieval, and deletion
-- A legacy ATS-style scorecard is still returned by the resume API, but the current upload pipeline does not populate it; use the screening endpoint for the implemented AI analysis.
-
-### 🎯 Job Matching and Explainability
-
-- Create jobs with required and optional skills
-- Compare a candidate resume to a job through the existing scorecard endpoint
-- Run AI-assisted explainable matching against a parsed resume profile
-- Return an overall match percentage, missing skills, factor-level point contributions, and reasons
-- Derive a Hire, Maybe, or Reject recommendation deterministically from the explainable result
-- Persist match records for later review
-
-### 💼 Recruitment Workflow
-
-- Create, browse, update, and delete job listings
-- Submit and track applications
-- Candidate screening and match-card interface
-- Role-aware recruiter and candidate dashboards
-- Analytics summary and recruitment pipeline view
-- Interview creation, listing, and submission workflows
-
-### 📈 Career Growth Workspace
-
-- Career goals and progress tracking
-- Coding-question and submission workflow
-- AI career plans grounded in existing profiles, screening outputs, and recent matches, with saved history
-- Review-only AI resume-rewrite suggestions that retain the submitted original text for comparison
-- Review-only ATS keyword and phrasing suggestions grounded in a selected target job
-- Notification centre with unread tracking and bulk actions
-
-### 🎙️ Adaptive Interview AI (Phase 6)
-
-- Stateful multi-turn interview sessions with candidate ownership authorization checks
-- Adaptive question generation and dynamic difficulty adjustments based on candidate performance
-- 5-dimension turn evaluation: technical correctness, communication clarity, problem-solving depth, behavioral alignment, and experience relevance
-- Session lifecycle status tracking (`in_progress`, `ready_to_complete`, `completed`, `abandoned`)
-- Ideal answer benchmark comparison and aggregated final interview report
-
-### 💻 Coding AI and Code Review (Phase 7)
-
-- AI-generated coding challenges tailored to job skills and difficulty levels
-- Plain-text candidate code submission without local runtime execution
-- Static AI code review evaluating correctness, edge cases/bugs, Big-O time and space complexity, syntax validity, and optimization suggestions
-- Consolidated feedback view combining question details, submitted code, and AI review
-
-### 📊 Recruiter AI & Decision Support (Phase 8)
-
-- Recruiter candidate summary report synthesizing resume, match, interview, and coding evaluations
-- Side-by-side candidate comparison matrix with relative strengths and dimension leaders
-- Deterministic candidate ranking algorithm with configurable sub-score weights and dynamic weight normalization
-- AI-generated natural language rank justifications
-- Recruiter condensed interview summary view
-- Aggregate hiring recommendations (`Hire`, `Maybe`, `Reject`) with grounded reasoning
-- Structured job description generator
-
-### 🔬 Research Features (Phase 9)
-
-- Unified multi-phase explanation trace endpoint with deterministic cross-phase consistency metrics
-- Statistical process bias auditing across applicant pools (mean, std dev, variance flags, factor dominance) with zero protected demographic data collection
-- Resume internal consistency and timeline anomaly audit
-- Interview stylometric cheat risk detection (phrasing shifts, unnatural polish)
-- Human-in-the-loop ethical decision-support disclaimers across all research endpoints
-
----
-
-## 🛠 Tech Stack
-
-| Category | Technologies | Usage |
-| --- | --- | --- |
-| **Frontend** | React 19, TypeScript, Vite | Single-page web application |
-| **UI & Styling** | Tailwind CSS, Base UI, Lucide React, Sonner | Components, styling, icons, and notifications |
-| **Frontend Data** | TanStack React Query, Zustand, Axios | Server-state caching, auth state, and API requests |
-| **Backend** | Python 3.14, FastAPI, Pydantic | REST API and request/response validation |
-| **Database** | MongoDB, Motor, Beanie | Asynchronous document persistence and models |
-| **Authentication** | JWT, Passlib, bcrypt, python-jose | Password hashing and token-based access |
-| **Resume Processing** | PyMuPDF, OpenAI SDK, Pydantic | PDF text extraction and structured AI responses |
-| **Development** | npm, Vite, Uvicorn | Frontend tooling and local API server |
-
----
-
-## 📂 Project Structure
-
-```text
-NipunHire AI/
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── backend/
-│   ├── .env.example           # Backend environment template
-│   ├── app/
-│   │   ├── ai/                # AI client and supporting utilities
-│   │   ├── api/               # FastAPI endpoint modules
-│   │   ├── core/              # Configuration, security, dependencies
-│   │   ├── db/                # MongoDB setup
-│   │   ├── models/            # Beanie document models
-│   │   ├── repositories/      # Database access layer
-│   │   ├── schemas/           # Pydantic request/response contracts
-│   │   ├── services/          # Business logic and workflows
-│   │   └── prompts/           # AI prompt templates
-│   └── tests/                 # Backend unit tests
-└── frontend/
-    ├── .env.example           # Frontend environment template
-    ├── public/                # Static assets
-    ├── src/
-    │   ├── app/               # Routing and providers
-    │   ├── features/          # Feature-based pages and components
-    │   └── shared/            # Shared UI, API clients, and utilities
-    └── package.json
+```
+📄 PDF Resume Processing  ──▶  🎯 Factor Match & Screening  ──▶  🎙️ Adaptive AI Interview
+                                                                       │
+🔬 Process Bias & Fraud Audit  ◀──  📊 Recruiter Ranking & Decision ◀──  💻 Static Code Review
 ```
 
-### 🏗 Architecture
+> [!IMPORTANT]
+> **Human-in-the-Loop AI Directive**: All AI outputs across NipunHire AI—from match percentages to interview cheat risk flags—are decision-support signals designed for human evaluation. Automated systems never issue final employment decisions or candidate rejections independently.
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
-flowchart LR
-    U[Candidate / Recruiter] --> F[React + Vite Frontend]
-    F -->|REST API + JWT| B[FastAPI Backend]
-    B --> S[Service Layer]
-    S --> R[Repository Layer]
-    R --> M[(MongoDB)]
-    S --> P[Prompt Templates]
-    S --> O[OpenAI API]
-    B --> X[PyMuPDF PDF Extraction]
-    B --> L[Local Resume Storage]
-```
+flowchart TD
+    subgraph Client ["Client Presentation Layer (React 19 + TypeScript + Tailwind)"]
+        UI[Single Page Web Application]
+        State[TanStack Query + Zustand]
+    end
 
-The backend separates HTTP routers, services, repositories, document models, and Pydantic schemas. The resume pipeline stores the uploaded PDF locally, extracts its text with PyMuPDF, and sends only the required text or structured profile data to the AI service for the relevant stage.
+    subgraph API ["API & Dependency Layer (FastAPI + Async Python 3.14)"]
+        Router[REST API Routers /api/v1]
+        Auth[JWT OAuth2 Security & RBAC]
+        GlobalExc[Global Exception Handlers]
+    end
+
+    subgraph Service ["Domain Logic & AI Core"]
+        Services[Service Layer]
+        AIService[Centralized AIService + Retries]
+        Prompts[Prompt Template Loader]
+    end
+
+    subgraph Data ["Persistence & Extraction"]
+        Motor[Async Motor Client + Beanie ODM]
+        PyMuPDF[PyMuPDF PDF Text Extractor]
+        DB[(MongoDB 8.3 Document Database)]
+    end
+
+    UI -->|REST + JWT Bearer| Router
+    Router --> Auth
+    Auth --> GlobalExc
+    GlobalExc --> Services
+    Services --> AIService
+    AIService --> Prompts
+    AIService -->|Structured JSON Responses| OpenAI[OpenAI GPT API]
+    Services --> PyMuPDF
+    Services --> Motor
+    Motor --> DB
+```
 
 ---
 
-## 🚀 Getting Started
+## ⚡ Platform Modules
+
+<details open>
+<summary><b>📄 Phase 1–3: Resume Intelligence & ATS Compatibility</b></summary>
+<br>
+
+* 📥 **PDF Resume Ingestion**: Validated 5 MB PDF uploads with local storage and PyMuPDF text extraction.
+* 🧠 **OpenAI Schema-Validated Parsing**: Converts unformatted resume text into structured candidate profile entities.
+* 🔍 **AI Screening & ATS Feedback**: Evaluates strengths, weaknesses, category skills, and actionable improvement recommendations.
+* 📜 **Resume History & Management**: Full retrieval, profile update, and soft/hard deletion workflows.
+
+</details>
+
+<details open>
+<summary><b>🎯 Phase 4–5: Explainable Job Matching & Candidate Intelligence</b></summary>
+<br>
+
+* ⚖️ **Explainable Factor Matching**: Reconciles individual named point contributions strictly to sum to the overall match score percentage.
+* 🤖 **Deterministic Recommendations**: Generates `Hire`, `Maybe`, or `Reject` candidate signals based on reconciled factor arithmetic.
+* 📈 **AI Career Plans & Guidance**: Tailored career growth blueprints grounded in existing candidate profile data.
+* 📝 **Review-Only ATS & Resume Rewrites**: Review-only optimization suggestions retaining original submitted text for side-by-side comparison.
+
+</details>
+
+<details open>
+<summary><b>🎙️ Phase 6: Adaptive AI Interview Simulation</b></summary>
+<br>
+
+* 🔄 **Stateful Multi-Turn Sessions**: Tracks question history, difficulty levels, candidate turns, and session lifecycle (`in_progress`, `ready_to_complete`, `completed`, `abandoned`).
+* 📊 **5-Dimension Turn Evaluation**: Scores technical correctness, communication clarity, problem-solving depth, behavioral alignment, and experience relevance per turn.
+* 🔐 **Ownership Authorization**: Enforces candidate ownership checks (unauthorized access returns `404 Not Found` to prevent resource probing).
+* 🎯 **Benchmark Comparisons**: Aggregates final reports with ideal answer comparisons and overall performance scores.
+
+</details>
+
+<details open>
+<summary><b>💻 Phase 7: Coding AI & Static Code Review</b></summary>
+<br>
+
+* 🧩 **AI Question Generation**: Generates problem statements, input/output constraints, test cases, and starter code tailored to job technologies and difficulty levels.
+* 🛡️ **Static Code Review (No Sandbox Execution)**: Analyzes submitted plain-text code for correctness, edge cases, Big-O time complexity, space complexity, and code quality.
+* ⚠️ **Syntax Validity Checks**: Detects incomplete snippets or syntax defects, flagging `is_incomplete_or_invalid: true` rather than guessing execution outcomes.
+* 📋 **Consolidated Feedback View**: Unifies question specification, candidate source code, and AI review analysis in a single endpoint.
+
+</details>
+
+<details open>
+<summary><b>📊 Phase 8: Recruiter AI & Decision Support</b></summary>
+<br>
+
+* 📝 **Candidate Summary Reports**: Synthesizes multi-phase evaluations (resume match, interview report, coding review) into recruiter-facing executive summaries.
+* 🔀 **Side-by-Side Candidate Comparison**: Generates side-by-side matrices ranking relative strengths and dimension leaders across candidate pools.
+* 🔢 **Deterministic Candidate Ranking**: Ranks candidates using configurable sub-score weights (`match_weight`, `interview_weight`, `coding_weight`) with dynamic weight normalization for missing evaluations.
+* ✍️ **AI Rank Justifications**: Generates concise natural language justifications per rank position based on computed scores.
+* 💡 **Aggregate Hiring Recommendations**: Formulates final `Hire`, `Maybe`, or `Reject` decisions with grounded reasoning.
+* 📑 **Job Description Generator**: Auto-generates structured job descriptions (summary, responsibilities, required and preferred qualifications) from role titles and skills.
+
+</details>
+
+<details open>
+<summary><b>🔬 Phase 9: Research Features & Ethics Auditing</b></summary>
+<br>
+
+* 🔍 **Unified Explanation Traces**: Consolidates match factor breakdowns, interview dimensions, and coding reviews into a single trace with deterministic cross-phase consistency metrics.
+* 🛡️ **Statistical Process Bias Auditing**: Calculates score distributions (mean, median, std dev, min/max), high variance flags, and single-factor rejection dominance across applicant pools. **Contains ZERO protected demographic attribute collection or profiling.**
+* ⚠️ **Resume Internal Consistency Audit**: Checks stated resume text for timeline overlaps, unsupported skill claims, and date contradictions.
+* 🕵️ **Interview Stylometric Cheat Risk Detection**: Analyzes Q&A history for phrasing shifts and unnatural polish. Informational-only; never auto-disqualifies candidates.
+* ⚖️ **Mandatory Ethical Disclaimers**: Every research response includes a non-empty `human_review_disclaimer` field framing outputs as decision-support signals.
+
+</details>
+
+---
+
+## 🛠️ Tech Stack
+
+| Domain | Tooling & Frameworks | Description |
+| :--- | :--- | :--- |
+| **Backend Core** | ![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-Latest-009688?style=flat-square&logo=fastapi&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-v2-E92063?style=flat-square) | High-performance asynchronous REST API and strict schema validation |
+| **Database** | ![MongoDB](https://img.shields.io/badge/MongoDB-8.3-47A248?style=flat-square&logo=mongodb&logoColor=white) ![Beanie](https://img.shields.io/badge/Beanie-ODM-blue?style=flat-square) | Async Motor MongoDB client with Beanie ODM document models |
+| **AI Foundation** | ![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=flat-square&logo=openai&logoColor=white) PyMuPDF | Structured JSON response parsing, prompt loader, and PDF text extraction |
+| **Frontend UI** | ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white) | Modern SPA frontend with TanStack React Query & Zustand state management |
+| **Styling & UI** | ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) Lucide React Sonner | Glassmorphism UI components, dynamic icons, and toast notifications |
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.14+
-- Node.js 20+ and npm
-- MongoDB (local or hosted)
-- An OpenAI API key for resume parsing, screening, and explainable matching
-- Git
+* **Python 3.14+**
+* **Node.js 20+** and `npm`
+* **MongoDB** (Local instance or MongoDB Atlas)
+* **OpenAI API Key**
 
-### 1. Clone the repository
+### Step 1: Clone Repository
 
 ```bash
-git clone <your-repository-url>
-cd <repository-directory>/"NipunHire AI"
+git clone https://github.com/aniksam-github/NipunHire-AI.git
+cd NipunHire-AI
 ```
 
-### 2. Configure the backend
+### Step 2: Backend Setup
 
 ```bash
+# Create and activate virtual environment
 python -m venv .venv
-```
 
-Activate the virtual environment:
-
-```bash
 # Windows PowerShell
 .venv\Scripts\Activate.ps1
-
-# macOS / Linux
+# Linux/macOS
 source .venv/bin/activate
-```
 
-Install dependencies and copy the environment template:
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
 
-# Windows PowerShell
-Copy-Item backend/.env.example backend/.env
-
-# macOS / Linux
+# Copy environment template
 cp backend/.env.example backend/.env
 ```
 
-Set the required backend variables in `backend/.env`, then start the API:
+Configure `backend/.env`:
+```env
+MONGODB_URI=mongodb://localhost:27017
+DATABASE_NAME=nipunhire_db
+JWT_SECRET=your-super-secret-jwt-key
+OPENAI_API_KEY=sk-proj-your-openai-api-key
+OPENAI_MODEL=gpt-4o-mini
+```
 
+Start Backend Server:
 ```bash
 cd backend
 uvicorn app.main:app --reload
 ```
+Backend API will run live at `http://localhost:8000`.
 
-The API runs at `http://localhost:8000`.
-
-### 3. Configure the frontend
-
-Open a new terminal in `NipunHire AI/frontend`:
+### Step 3: Frontend Setup
 
 ```bash
+cd ../frontend
 npm install
-```
-
-Copy the frontend environment template:
-
-```bash
-# Windows PowerShell
-Copy-Item .env.example .env
-
-# macOS / Linux
 cp .env.example .env
-```
-
-Start the frontend:
-
-```bash
 npm run dev
 ```
-
-Vite normally serves the application at `http://localhost:5173`.
-
-### Environment Variables
-
-Copy each `.env.example` file before setting values. Do not commit `.env` files or place production secrets in source control.
-
-#### Backend (`backend/.env`)
-
-| Variable | Description |
-| --- | --- |
-| `PROJECT_NAME` | Application name shown in backend metadata. |
-| `VERSION` | Application version shown in backend metadata. |
-| `ENVIRONMENT` | Deployment environment label, such as `development`, `staging`, or `production`. |
-| `NIPUNHIRE_DEBUG` | Enables or disables the backend debug setting. |
-| `MONGODB_URI` | Connection string for the MongoDB instance. |
-| `DATABASE_NAME` | MongoDB database used by the application. |
-| `JWT_SECRET` | Secret used to sign and verify JWTs; set a long, random value. |
-| `JWT_ALGORITHM` | JWT signing algorithm; defaults to `HS256` when empty. |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Lifetime, in minutes, of access tokens. |
-| `REFRESH_TOKEN_EXPIRE_DAYS` | Lifetime, in days, of refresh tokens. |
-| `GEMINI_API_KEY` | Reserved configuration for Gemini; it is not used by the current AI service. |
-| `OPENAI_API_KEY` | API key used by the current resume parsing, screening, and explainable matching service. |
-| `OPENAI_MODEL` | OpenAI model identifier used for structured AI responses. |
-| `OPENAI_REQUEST_TIMEOUT_SECONDS` | Per-request timeout, in seconds, for OpenAI requests. |
-| `OPENAI_MAX_RETRIES` | Maximum number of attempts for retryable OpenAI request failures. |
-| `ALLOWED_ORIGINS` | JSON list of browser origins allowed by CORS. |
-
-#### Frontend (`frontend/.env`)
-
-| Variable | Description |
-| --- | --- |
-| `VITE_API_BASE_URL` | Base URL, including `/api/v1`, used by the frontend API client. |
+Frontend development server will run live at `http://localhost:5173`.
 
 ---
 
-## 📖 Documentation
+## 📊 API Modules
 
-### API Documentation
+FastAPI automatically generates interactive API documentation:
+* **Swagger UI**: [`http://localhost:8000/docs`](http://localhost:8000/docs)
+* **ReDoc**: [`http://localhost:8000/redoc`](http://localhost:8000/redoc)
 
-After starting the backend, FastAPI provides interactive API documentation:
-
-| Resource | URL |
-| --- | --- |
-| Swagger UI | `http://localhost:8000/docs` |
-| ReDoc | `http://localhost:8000/redoc` |
-
-All application API routes use the `/api/v1` prefix. Authenticated endpoints require an `Authorization: Bearer <access-token>` header.
-
-### API Modules
-
-| Module | Base path | Purpose |
-| --- | --- | --- |
-| Authentication | `/auth` | Registration, login, refresh tokens, and account information |
-| Jobs | `/jobs` | Job creation and management |
-| Resumes | `/resumes` | PDF upload, AI parsing, screening, history, and deletion |
-| Matching | `/matching` | Resume-to-job comparison and explainable profile matching |
-| Applications | `/applications` | Application creation, status updates, and listing |
-| Profile and Settings | `/profile`, `/settings` | Candidate profile and account preferences |
-| Dashboard | `/dashboard` | Candidate dashboard data |
-| Interviews | `/interviews` | Interview creation, listing, and submission |
-| Goals | `/goals` | Career goals and progress |
-| Coding | `/coding` | Coding questions and submissions |
-| Coach | `/career-coach` | Career-coach requests, AI plans, and history |
-| Candidate Intelligence | `/candidate-intelligence` | Review-only resume and ATS optimization suggestions |
-| Notifications | `/notifications` | Notification read and unread state |
-| Recruiter AI | `/recruiter` | Candidate summary reports, side-by-side comparisons, candidate ranking, recruiter interview view, aggregate hiring decision, job description generator |
-| Research Features | `/research` | Explanation traces, statistical process bias audits, resume internal consistency audits, interview cheat risk detection |
-
-### How the Analysis Works
-
-1. A candidate uploads a PDF resume.
-2. The backend validates it, stores it locally, and uses PyMuPDF to extract text and page count.
-3. The OpenAI-backed parser converts the extracted text into a validated structured profile.
-4. A second structured AI response creates the professional summary and career snapshot.
-5. The screening endpoint can then generate strengths, weaknesses, ATS-compatibility assessment, skill categories, and improvement suggestions from the structured profile.
-6. The explainable matching endpoint compares that profile with a job and requires named factor contributions to reconcile exactly with its overall match score.
-
-> Scores and recommendations are decision-support signals only. Human review must remain part of every hiring decision.
-
-### Development Commands
-
-| Directory | Command | Description |
-| --- | --- | --- |
-| `frontend` | `npm run dev` | Start the frontend development server |
-| `frontend` | `npm run build` | Type-check and create a production build |
-| `frontend` | `npm run lint` | Run frontend linting |
-| `backend` | `uvicorn app.main:app --reload` | Start the backend in development mode |
-| `backend` | `python -m unittest discover -s tests` | Run the backend test suite |
+| Module | Base Path | Key Features | Auth Guard |
+| :--- | :--- | :--- | :---: |
+| **Auth** | `/api/v1/auth` | Login, registration, JWT token refresh | Public |
+| **Jobs** | `/api/v1/jobs` | Job post creation, listing, updates, deletion | Authenticated |
+| **Resumes** | `/api/v1/resumes` | PDF upload, PyMuPDF text extraction, AI screening | Authenticated |
+| **Matching** | `/api/v1/matching` | Explainable factor matching & point contribution audit | Authenticated |
+| **Interviews** | `/api/v1/interviews` | Multi-turn adaptive interviews, difficulty shifts, reports | Authenticated |
+| **Coding** | `/api/v1/coding` | Challenge generation, plain-text code submission, static AI review | Authenticated |
+| **Recruiter AI** | `/api/v1/recruiter` | Candidate summary, side-by-side comparison, candidate ranking | Recruiter / Admin |
+| **Research** | `/api/v1/research` | Explanation traces, statistical process bias audits, cheat risk checks | Recruiter / Admin |
 
 ---
 
-## 🧪 Research
+## 🧪 Testing & Quality
 
-The `research data/` directory at the repository root contains reference material used while designing the platform's recruitment, resume-screening, and AI-assistance workflows.
+The backend test suite covers schema validation, service workflows, deterministic ranking algorithms, statistical bias auditing, and role authorization.
 
-The core research contribution under development is an explainability approach for job matching: instead of presenting only a score, the system requires factor-level contributions and reasons whose arithmetic reconciles with the overall match percentage. This is intended to support inspection and human review; it is not a claim of validated fairness, accuracy, or hiring efficacy.
+```bash
+# Run full backend test suite
+cd backend
+python -m unittest discover -s tests
+```
 
-Current research direction includes:
+```text
+Ran 94 tests in 2.020s
 
-- Explainable decision support in recruitment systems
-- Resume parsing and ATS compatibility evaluation
-- Fairness, privacy, and human oversight in AI-assisted hiring
-- Structured skill matching and adaptive interview assessment
+OK
+```
 
----
-
-## 🗺 Roadmap
-
-- [x] FastAPI backend with MongoDB persistence
-- [x] React/Vite frontend with protected routes
-- [x] Authentication and profile management
-- [x] Job management, applications, and candidate matching
-- [x] PDF resume ingestion and OpenAI-backed structured parsing
-- [x] AI resume screening and explainable factor-level profile-to-job matching
-- [x] Candidate intelligence: AI career plans plus review-only resume and ATS suggestions
-- [x] Adaptive Interview AI: stateful multi-turn interview sessions, 5-dimension evaluation, and reports
-- [x] Coding AI: question generation, plain-text submission, static AI code review, and complexity analysis
-- [x] Recruiter AI: candidate summaries, side-by-side comparison, deterministic candidate ranking, recruiter interview view, aggregate hiring decisions, job description generator
-- [x] Research Features: explanation trace consolidation, statistical process bias auditing, resume internal consistency audits, and interview cheat risk detection
-- [x] Backend unit test suite covering schemas, services, authorization, and deterministic ranking/audit algorithms (94 passing tests)
-- [ ] Frontend automated test suite
-- [ ] CI/CD pipeline
-- [ ] Production deployment configuration
-- [ ] Managed object storage for uploaded resumes
-- [ ] AI evaluation, guardrails, and production monitoring
-- [ ] Advanced semantic matching and recruiter reporting
+> [!NOTE]
+> All unit tests execute deterministically without making live network calls to external LLM providers.
 
 ---
 
-## 🤝 Contributing
+## 🔬 Research & Ethics
 
-Contributions are welcome.
+The `research data/` directory contains foundational literature and design specifications driving NipunHire AI's algorithmic transparency.
 
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/your-feature`.
-3. Make and test your changes.
-4. Commit with a clear message.
-5. Open a pull request explaining the change and how it was tested.
+### **Core Academic Contributions**:
+1. **Explainable Point Reconciliation**: Point contributions of individual match factors are mathematically constrained to sum exactly to overall match percentages.
+2. **Process Audit vs Demographic Profiling**: Evaluates score variance ($\sigma^2$) and single-factor dominance across candidate pools **without collecting, inferring, or storing protected demographic attributes (race, gender, age, etc.)**.
+3. **Internal Consistency Audits**: Evaluates timeline logic and stated claim internal consistency without claiming external background check verification.
+4. **Human-in-the-Loop Disclaimers**: Every response schema in Phase 9 includes explicit non-empty `human_review_disclaimer` fields confirming that AI outputs are advisory signals.
 
-Please do not commit `.env` files, API keys, JWT secrets, private resumes, or other personal candidate data.
+---
+
+## 🗺️ Roadmap
+
+- [x] **Phase 1**: FastAPI backend, MongoDB Beanie ODM persistence, JWT Auth
+- [x] **Phase 2**: PDF resume upload, PyMuPDF extraction, OpenAI structured profile parsing
+- [x] **Phase 3**: Resume intelligence screening, ATS compatibility assessment
+- [x] **Phase 4**: Explainable factor-level profile-to-job matching & point reconciliation
+- [x] **Phase 5**: Candidate intelligence (AI career plans, review-only resume & ATS suggestions)
+- [x] **Phase 6**: Adaptive AI interview simulation, 5-dimension turn evaluation, candidate ownership checks
+- [x] **Phase 7**: Coding AI challenge generation, static code review, Big-O complexity analysis
+- [x] **Phase 8**: Recruiter AI candidate summary, side-by-side comparison, deterministic candidate ranking
+- [x] **Phase 9**: Research features (explanation traces, statistical process bias auditing, cheat risk checks)
+- [x] **Testing**: Comprehensive 94-test backend unit & integration test suite
+- [ ] **Phase 10**: Frontend React component integration for Phase 6–9 recruiter/candidate UI
+- [ ] **Phase 11**: Production Dockerization, CI/CD pipeline, and Cloud Managed Storage
 
 ---
 
 ## 📜 License
 
-Licensed under the Apache License 2.0.
+Distributed under the **Apache License 2.0**. See [`LICENSE`](LICENSE) for details.
