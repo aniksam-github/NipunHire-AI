@@ -74,6 +74,39 @@ The platform treats automated outputs as decision-support signals. Its explainab
 - Review-only ATS keyword and phrasing suggestions grounded in a selected target job
 - Notification centre with unread tracking and bulk actions
 
+### 🎙️ Adaptive Interview AI (Phase 6)
+
+- Stateful multi-turn interview sessions with candidate ownership authorization checks
+- Adaptive question generation and dynamic difficulty adjustments based on candidate performance
+- 5-dimension turn evaluation: technical correctness, communication clarity, problem-solving depth, behavioral alignment, and experience relevance
+- Session lifecycle status tracking (`in_progress`, `ready_to_complete`, `completed`, `abandoned`)
+- Ideal answer benchmark comparison and aggregated final interview report
+
+### 💻 Coding AI and Code Review (Phase 7)
+
+- AI-generated coding challenges tailored to job skills and difficulty levels
+- Plain-text candidate code submission without local runtime execution
+- Static AI code review evaluating correctness, edge cases/bugs, Big-O time and space complexity, syntax validity, and optimization suggestions
+- Consolidated feedback view combining question details, submitted code, and AI review
+
+### 📊 Recruiter AI & Decision Support (Phase 8)
+
+- Recruiter candidate summary report synthesizing resume, match, interview, and coding evaluations
+- Side-by-side candidate comparison matrix with relative strengths and dimension leaders
+- Deterministic candidate ranking algorithm with configurable sub-score weights and dynamic weight normalization
+- AI-generated natural language rank justifications
+- Recruiter condensed interview summary view
+- Aggregate hiring recommendations (`Hire`, `Maybe`, `Reject`) with grounded reasoning
+- Structured job description generator
+
+### 🔬 Research Features (Phase 9)
+
+- Unified multi-phase explanation trace endpoint with deterministic cross-phase consistency metrics
+- Statistical process bias auditing across applicant pools (mean, std dev, variance flags, factor dominance) with zero protected demographic data collection
+- Resume internal consistency and timeline anomaly audit
+- Interview stylometric cheat risk detection (phrasing shifts, unnatural polish)
+- Human-in-the-loop ethical decision-support disclaimers across all research endpoints
+
 ---
 
 ## 🛠 Tech Stack
@@ -283,6 +316,8 @@ All application API routes use the `/api/v1` prefix. Authenticated endpoints req
 | Coach | `/career-coach` | Career-coach requests, AI plans, and history |
 | Candidate Intelligence | `/candidate-intelligence` | Review-only resume and ATS optimization suggestions |
 | Notifications | `/notifications` | Notification read and unread state |
+| Recruiter AI | `/recruiter` | Candidate summary reports, side-by-side comparisons, candidate ranking, recruiter interview view, aggregate hiring decision, job description generator |
+| Research Features | `/research` | Explanation traces, statistical process bias audits, resume internal consistency audits, interview cheat risk detection |
 
 ### How the Analysis Works
 
@@ -331,8 +366,11 @@ Current research direction includes:
 - [x] PDF resume ingestion and OpenAI-backed structured parsing
 - [x] AI resume screening and explainable factor-level profile-to-job matching
 - [x] Candidate intelligence: AI career plans plus review-only resume and ATS suggestions
-- [x] Interview, goals, coding, coaching, and notifications modules
-- [x] Backend unit tests for AI, prompt, resume-intelligence, screening, and matching services
+- [x] Adaptive Interview AI: stateful multi-turn interview sessions, 5-dimension evaluation, and reports
+- [x] Coding AI: question generation, plain-text submission, static AI code review, and complexity analysis
+- [x] Recruiter AI: candidate summaries, side-by-side comparison, deterministic candidate ranking, recruiter interview view, aggregate hiring decisions, job description generator
+- [x] Research Features: explanation trace consolidation, statistical process bias auditing, resume internal consistency audits, and interview cheat risk detection
+- [x] Backend unit test suite covering schemas, services, authorization, and deterministic ranking/audit algorithms (94 passing tests)
 - [ ] Frontend automated test suite
 - [ ] CI/CD pipeline
 - [ ] Production deployment configuration
