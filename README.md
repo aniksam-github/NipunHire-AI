@@ -16,6 +16,7 @@
 [⚡ Platform Modules](#-platform-modules) •
 [🚀 Quick Start](#-quick-start) •
 [📊 API Modules](#-api-modules) •
+[🧪 Testing & Quality](#-testing--quality) •
 [🔬 Research & Ethics](#-research--ethics) •
 [⚠️ Known Limitations](#️-known-limitations) •
 [🗺️ Roadmap](#️-roadmap)
@@ -259,6 +260,27 @@ FastAPI automatically generates interactive API documentation:
 
 ---
 
+## 🧪 Testing & Quality
+
+The backend test suite covers schema validation, service workflows, deterministic ranking algorithms, statistical bias auditing, and role authorization.
+
+```bash
+# Run full backend test suite
+cd backend
+python -m unittest discover -s tests
+```
+
+```text
+Ran 94 tests in 2.020s
+
+OK
+```
+
+> [!NOTE]
+> All unit tests execute deterministically without making live network calls to external LLM providers.
+
+---
+
 ## 🔬 Research & Ethics
 
 The `research data/` directory contains foundational literature and design specifications driving NipunHire AI's algorithmic transparency.
@@ -275,6 +297,23 @@ The `research data/` directory contains foundational literature and design speci
 
 1. **Rate Limiter Storage**: The default `RateLimiterMiddleware` uses process-local in-memory state (`self._history`). In multi-worker deployments (e.g. `uvicorn main:app --workers 4`) or multi-container Kubernetes replicas, rate limits are enforced per-worker rather than globally. A Redis-backed rate limiter (e.g., using `redis-py` or `limits`) is the recommended production upgrade for horizontally scaled environments.
 2. **Audit Log Immutability Enforcement**: Audit log immutability is enforced at the **application layer** (the system exposes zero update, patch, or delete HTTP endpoints or repository methods). However, this is not enforced at the database storage engine layer—direct database access or administrative MongoDB commands could still alter or delete records.
+
+---
+
+## 🗺️ Roadmap
+
+- [x] **Phase 1**: FastAPI backend, MongoDB Beanie ODM persistence, JWT Auth
+- [x] **Phase 2**: PDF resume upload, PyMuPDF extraction, OpenAI structured profile parsing
+- [x] **Phase 3**: Resume intelligence screening, ATS compatibility assessment
+- [x] **Phase 4**: Explainable factor-level profile-to-job matching & point reconciliation
+- [x] **Phase 5**: Candidate intelligence (AI career plans, review-only resume & ATS suggestions)
+- [x] **Phase 6**: Adaptive AI interview simulation, 5-dimension turn evaluation, candidate ownership checks
+- [x] **Phase 7**: Coding AI challenge generation, static code review, Big-O complexity analysis
+- [x] **Phase 8**: Recruiter AI candidate summary, side-by-side comparison, deterministic candidate ranking
+- [x] **Phase 9**: Research features (explanation traces, statistical process bias auditing, cheat risk checks)
+- [x] **Testing**: Comprehensive 94-test backend unit & integration test suite
+- [ ] **Phase 10**: Frontend React component integration for Phase 6–9 recruiter/candidate UI
+- [ ] **Phase 11**: Production Dockerization, CI/CD pipeline, and Cloud Managed Storage
 
 ---
 
