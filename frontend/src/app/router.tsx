@@ -23,6 +23,9 @@ import { CodingPracticePage } from "@/features/coding-practice/components/coding
 import { CareerCoachPage } from "@/features/career-coach/components/career-coach-page";
 import { NotificationCenterPage } from "@/features/notifications/components/notification-center-page";
 import { LegalPage } from "@/features/legal/components/legal-page";
+import { InterviewPage } from "@/features/interviews/components/interview-page";
+import { RecruiterAIPage } from "@/features/recruiter/components/recruiter-ai-page";
+import { ResearchPage } from "@/features/research/components/research-page";
 
 // ---------------------------------------------------------------------------
 // Page layouts & Placeholders for future feature steps
@@ -242,6 +245,9 @@ export function AppRouter() {
           <Route path="/career-growth" element={<CareerGrowthPage />} />
           <Route path="/coding-practice" element={<CodingPracticePage />} />
           <Route path="/career-coach" element={<CareerCoachPage />} />
+          <Route path="/interviews" element={<InterviewPage />} />
+          <Route path="/recruiter-ai" element={<RecruiterAIPage />} />
+          <Route path="/research" element={<ResearchPage />} />
           <Route path="/notifications" element={<NotificationCenterPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

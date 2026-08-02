@@ -36,6 +36,7 @@ def _get_document_models() -> list:
     from app.models.notification import Notification
     from app.models.candidate_intelligence import ATSOptimizationSuggestion, ResumeOptimizationSuggestion
     from app.models.research import InterviewCheatRiskReport, ResumeAnomalyReport
+    from app.models.audit_log import AuditLog
 
     return [
         User,
@@ -56,38 +57,22 @@ def _get_document_models() -> list:
         ATSOptimizationSuggestion,
         ResumeAnomalyReport,
         InterviewCheatRiskReport,
+        AuditLog,
     ]
 
 
-async def connect_to_mongo() -> None:
-    """
-    Initializes the Motor client and Beanie ODM.
-    """
-    logger.info("Connecting to MongoDB at %s", settings.DATABASE_NAME)
-
+async def connect_to_mongo():
+    logger.info("Connecting to MongoDB at %s...", settings.MONGODB_URI)
     mongodb.client = AsyncIOMotorClient(settings.MONGODB_URI)
+    database = mongodb.client[settings.DATABASE_NAME]
 
-    # Fail fast: ping forces a round-trip instead of lazy-connecting silently
-    await mongodb.client.admin.command("ping")
-
-    await init_beanie(
-        database=mongodb.client[settings.DATABASE_NAME],
-        document_models=_get_document_models(),
-    )
-
-    logger.info("MongoDB connected and Beanie initialized successfully")
+    models = _get_document_models()
+    await init_beanie(database=database, document_models=models)
+    logger.info("MongoDB connected and Beanie initialized with %d models.", len(models))
 
 
-async def close_mongo_connection() -> None:
-    """
-    Closes the Motor client.
-    """
-    if mongodb.client is not None:
+async def close_mongo_connection():
+    if mongodb.client:
+        logger.info("Closing MongoDB connection...")
         mongodb.client.close()
-        logger.info("MongoDB connection closed")
-
-
-def get_database():
-    if mongodb.client is None:
-        raise RuntimeError("MongoDB client not initialized. Call connect_to_mongo() first.")
-    return mongodb.client[settings.DATABASE_NAME]
+        logger.info("MongoDB connection closed.")

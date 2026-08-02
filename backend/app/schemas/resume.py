@@ -19,6 +19,13 @@ class AIFeedbackSchema(BaseModel):
     formatting_tips: list[str]
 
 
+class ResumeUpdateRequest(BaseModel):
+    """Payload for candidate AI correction of parsed contact details and skills (Checklist #5)."""
+    parsed_email: Optional[str] = None
+    parsed_phone: Optional[str] = None
+    extracted_skills: Optional[list[str]] = None
+
+
 class ResumeResponse(BaseModel):
     """Safe public representation of a candidate's resume analysis."""
 

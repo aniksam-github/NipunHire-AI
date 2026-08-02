@@ -21,7 +21,7 @@ from app.core.resume_exceptions import (
 from app.models.resume import Resume
 from app.models.resume_profile import ResumeProfile
 from app.repositories import resume_profile_repo, resume_repo
-from app.schemas.resume import AIFeedbackSchema, QualityBreakdownSchema, ResumeResponse
+from app.schemas.resume import AIFeedbackSchema, QualityBreakdownSchema, ResumeResponse, ResumeUpdateRequest
 from app.schemas.resume_intelligence import ResumeParsingResult, ResumeSummaryResult
 from app.services import notification_service, pdf_service
 from app.services.prompt_service import load_prompt
@@ -206,6 +206,36 @@ async def get_resume_by_id(resume_id: str, candidate_id: str) -> ResumeResponse:
         raise EntityNotFoundError(entity="Resume", identifier=resume_id)
     if str(resume.candidate_id) != candidate_id:
         raise AuthorizationError(detail="You can only view your own uploaded resumes.")
+    return _build_resume_response(resume)
+
+
+async def update_resume_parsed_data(
+    resume_id: str, candidate_id: str, payload: ResumeUpdateRequest
+) -> ResumeResponse:
+    """Persist human corrections to parsed email, phone, and extracted skills (Checklist #5)."""
+    resume = await resume_repo.get_by_id(resume_id)
+    if not resume:
+        raise EntityNotFoundError(entity="Resume", identifier=resume_id)
+    if str(resume.candidate_id) != candidate_id:
+        raise AuthorizationError(detail="You can only edit your own uploaded resumes.")
+
+    if payload.parsed_email is not None:
+        resume.parsed_email = payload.parsed_email
+    if payload.parsed_phone is not None:
+        resume.parsed_phone = payload.parsed_phone
+    if payload.extracted_skills is not None:
+        resume.extracted_skills = payload.extracted_skills
+        # Recalculate keyword density score if skills updated
+        new_keyword_score = min(100, max(20, len(payload.extracted_skills) * 12))
+        resume.quality_breakdown["keyword_density_score"] = new_keyword_score
+        resume.ats_score = int(
+            (resume.quality_breakdown["completeness_score"] * 0.3)
+            + (new_keyword_score * 0.4)
+            + (resume.quality_breakdown["formatting_score"] * 0.3)
+        )
+
+    await resume.save()
+    logger.info("Persisted candidate AI correction for resume: %s", resume_id)
     return _build_resume_response(resume)
 
 

@@ -1,6 +1,6 @@
 """
 Recruiter AI Router — Phase 8 recruiter-facing aggregation and decision support tools.
-Guarded strictly by recruiter/admin role dependencies.
+Guarded strictly by recruiter/admin role dependencies. Automatically records audit events (Task 2).
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -24,7 +24,7 @@ from app.schemas.recruiter import (
     JobDescriptionGenerateRequest,
     RecruiterInterviewSummaryResponse,
 )
-from app.services import recruiter_service
+from app.services import recruiter_service, audit_service
 
 router = APIRouter(
     prefix="/recruiter",
@@ -70,7 +70,15 @@ async def compare_candidates(
     Produces a side-by-side comparison matrix of candidate strengths and dimension ratings.
     """
     try:
-        return await recruiter_service.compare_candidates(request)
+        res = await recruiter_service.compare_candidates(request)
+        await audit_service.record_audit_event(
+            acting_user=current_user,
+            action_type="candidate_comparison",
+            target_resource_id=request.job_id,
+            target_resource_type="job",
+            details={"candidate_ids": request.candidate_ids},
+        )
+        return res
     except CandidateSummaryGenerationError as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
 
@@ -93,7 +101,17 @@ async def rank_candidates_for_job(
     """
     cand_ids = request.candidate_ids if request else None
     weights = request.weights if request else None
-    return await recruiter_service.rank_candidates_for_job(job_id, cand_ids, weights)
+    res = await recruiter_service.rank_candidates_for_job(job_id, cand_ids, weights)
+    
+    # Automatically record audit event for candidate ranking
+    await audit_service.record_audit_event(
+        acting_user=current_user,
+        action_type="candidate_ranking",
+        target_resource_id=job_id,
+        target_resource_type="job",
+        details={"candidate_count": len(res.rankings)},
+    )
+    return res
 
 
 # --- Module 4: Interview Summary (Recruiter View) ---
@@ -129,9 +147,21 @@ async def generate_aggregate_hiring_recommendation(
 ):
     """
     Generates a final aggregate hiring decision grounded in candidate summary, rank, and phase data.
+    Automatically logs an immutable audit event capturing the decision recommendation and reasoning.
     """
     try:
-        return await recruiter_service.generate_aggregate_hiring_recommendation(request.candidate_id, request.job_id)
+        res = await recruiter_service.generate_aggregate_hiring_recommendation(
+            request.candidate_id, request.job_id
+        )
+        await audit_service.record_audit_event(
+            acting_user=current_user,
+            action_type="hiring_decision",
+            target_resource_id=request.candidate_id,
+            target_resource_type="candidate",
+            decision_reason=f"AI Decision Recommendation: {res.recommendation}. {res.overall_reasoning}",
+            details={"job_id": request.job_id, "recommendation": res.recommendation, "scores": res.scores},
+        )
+        return res
     except CandidateSummaryGenerationError as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
 

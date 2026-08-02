@@ -1,10 +1,12 @@
 /**
  * CandidateScreeningPage — main view for candidate rankings & AI match evaluations.
+ * Includes Human-in-the-Loop decision support badge (Checklist #11).
  */
 
 import { useState } from "react";
 import { Users, Sparkles, Plus, CheckCircle2 } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import { HumanDecisionTrustBadge } from "@/shared/design-system";
 import { CandidateMatchCard } from "./candidate-match-card";
 import { CandidateMatchModal } from "./candidate-match-modal";
 import type { MatchResponse } from "../types";
@@ -25,6 +27,9 @@ export function CandidateScreeningPage() {
 
   return (
     <div className="space-y-6">
+      {/* Mandatory Human Decision Support Trust Badge (Checklist #11) */}
+      <HumanDecisionTrustBadge message="Match compatibility percentages and factor breakdowns are explainable decision-support signals designed to assist candidate screening." />
+
       {/* Top Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6 rounded-2xl border border-border shadow-xl">
         <div className="space-y-1">
@@ -58,30 +63,21 @@ export function CandidateScreeningPage() {
           </p>
           <Button
             onClick={() => setIsModalOpen(true)}
-            className="rounded-xl bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold text-xs gap-2"
+            className="rounded-xl bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold text-xs shadow-md gap-2"
           >
-            <Sparkles className="size-4" />
-            <span>Evaluate Match Now</span>
+            <Plus className="size-4" />
+            <span>Run AI Match Screening</span>
           </Button>
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-foreground/80 flex items-center gap-1.5">
-              <CheckCircle2 className="size-4 text-emerald-400" />
-              <span>Active AI Evaluation Scorecards ({activeEvaluations.length})</span>
-            </span>
-          </div>
-
-          <div className="space-y-6">
-            {activeEvaluations.map((evalResult) => (
-              <CandidateMatchCard
-                key={evalResult.id}
-                match={evalResult}
-                jobTitle={getJobTitle(evalResult.job_id)}
-              />
-            ))}
-          </div>
+          {activeEvaluations.map((result) => (
+            <CandidateMatchCard
+              key={result.id}
+              result={result}
+              jobTitle={getJobTitle(result.job_id)}
+            />
+          ))}
         </div>
       )}
 

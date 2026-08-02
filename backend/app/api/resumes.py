@@ -1,11 +1,12 @@
 """
 Resumes API Router — HTTP endpoints for candidate resume PDF upload, parsing,
-ATS scorecard retrieval, and deletion.
+ATS scorecard retrieval, inline editing/correction, and deletion.
 """
 
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, status
 
 from app.core.dependencies import get_current_user
+from app.core.exceptions import AuthorizationError, EntityNotFoundError
 from app.core.resume_exceptions import (
     ResumeExtractionError,
     ResumeParsingError,
@@ -14,7 +15,7 @@ from app.core.resume_exceptions import (
 )
 from app.core.screening_exceptions import ResumeScreeningError
 from app.models.user import User
-from app.schemas.resume import ResumeResponse
+from app.schemas.resume import ResumeResponse, ResumeUpdateRequest
 from app.services import resume_service
 from app.services import resume_screening_service
 from app.schemas.resume_screening import ResumeScreeningResponse
@@ -98,6 +99,29 @@ async def get_resume(
     Retrieves full parsed attributes, ATS score, and AI quality feedback for a specific resume.
     """
     return await resume_service.get_resume_by_id(resume_id=resume_id, candidate_id=str(current_user.id))
+
+
+@router.patch(
+    "/{resume_id}",
+    response_model=ResumeResponse,
+    summary="Persist candidate AI corrections to parsed email, phone, or extracted skills",
+)
+async def update_resume_parsed_data(
+    resume_id: str,
+    payload: ResumeUpdateRequest,
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Updates and persists human corrections for parsed email, phone, or extracted skills (Checklist #5).
+    """
+    try:
+        return await resume_service.update_resume_parsed_data(
+            resume_id=resume_id, candidate_id=str(current_user.id), payload=payload
+        )
+    except EntityNotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.detail) from exc
+    except AuthorizationError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.detail) from exc
 
 
 @router.delete(

@@ -1,22 +1,121 @@
 import { useEffect, useState } from "react";
-import { Code2, Loader2, Send } from "lucide-react";
-import { api } from "@/shared/lib/axios";
+import { Loader2, Send, Sparkles, AlertTriangle, Cpu, HardDrive } from "lucide-react";
+import { toast } from "sonner";
+
+import { codingApi } from "@/shared/lib/api-client";
+import { HumanDecisionTrustBadge } from "@/shared/design-system";
+import type { CodingQuestion, ConsolidatedCodingFeedbackResponse } from "@/shared/types/coding";
 import { Button } from "@/shared/components/ui/button";
 
-type Question = { id: string; title: string; prompt: string; language: "python" | "javascript" | "java" | "cpp" | "sql"; difficulty: string; starter_code: string };
-type Submission = { id: string; question_title: string; overall_score: number; correctness_score: number; code_quality_score: number; feedback: string[] };
-
 export function CodingPracticePage() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [selected, setSelected] = useState<Question | null>(null);
+  const [questions, setQuestions] = useState<CodingQuestion[]>([]);
+  const [selected, setSelected] = useState<CodingQuestion | null>(null);
   const [code, setCode] = useState("");
-  const [result, setResult] = useState<Submission | null>(null);
+  const [language, setLanguage] = useState<"python" | "javascript" | "typescript" | "java" | "cpp" | "sql" | "go">("python");
+  const [result, setResult] = useState<ConsolidatedCodingFeedbackResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [targetJobId, setTargetJobId] = useState("");
+  const [targetDifficulty, setTargetDifficulty] = useState<"easy" | "medium" | "hard">("medium");
 
-  useEffect(() => { api.get<Question[]>("/coding/questions").then(({ data }) => { setQuestions(data); setSelected(data[0] ?? null); setCode(data[0]?.starter_code ?? ""); }).finally(() => setLoading(false)); }, []);
-  const choose = (question: Question) => { setSelected(question); setCode(question.starter_code); setResult(null); };
-  const submit = async () => { if (!selected || !code.trim()) return; setSubmitting(true); try { const { data } = await api.post<Submission>("/coding/submissions", { question_id: selected.id, language: selected.language, code }); setResult(data); } finally { setSubmitting(false); } };
+  useEffect(() => {
+    // Load default questions
+    codingApi
+      .getConsolidatedFeedback("two-sum-python")
+      .catch(() => null);
 
-  return <div className="space-y-6"><div className="glass-card p-6 rounded-2xl border border-border"><h2 className="text-2xl font-extrabold flex items-center gap-2"><Code2 className="text-fuchsia-400" />Coding Practice</h2><p className="text-xs text-foreground/70 mt-1">Practice curated questions and get safe static feedback on correctness cues and code quality.</p></div>{loading ? <Loader2 className="animate-spin text-fuchsia-400" /> : <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6"><aside className="glass-card p-4 rounded-2xl border border-border space-y-2">{questions.map((question) => <button key={question.id} onClick={() => choose(question)} className={`w-full text-left p-3 rounded-xl text-xs ${selected?.id === question.id ? "bg-fuchsia-600 text-white" : "bg-background hover:bg-accent"}`}><p className="font-bold">{question.title}</p><p className="mt-1 opacity-70 capitalize">{question.language} · {question.difficulty}</p></button>)}</aside><section className="glass-card p-6 rounded-2xl border border-border space-y-4">{selected && <><h3 className="font-extrabold">{selected.title}</h3><p className="text-sm text-foreground/80">{selected.prompt}</p><textarea value={code} onChange={(e) => setCode(e.target.value)} spellCheck={false} className="w-full min-h-72 rounded-xl bg-slate-950 text-emerald-300 p-4 font-mono text-sm border border-border" /><Button onClick={submit} disabled={submitting}>{submitting ? <Loader2 className="animate-spin" /> : <Send />}Submit for review</Button>{result && <div className="rounded-xl border border-emerald-500/30 p-4 bg-emerald-500/5"><p className="font-extrabold text-emerald-400">Overall score: {result.overall_score}%</p><p className="text-xs mt-1">Correctness cues: {result.correctness_score}% · Code quality: {result.code_quality_score}%</p>{result.feedback.map((feedback) => <p key={feedback} className="text-xs mt-2">• {feedback}</p>)}</div>}</>}</section></div>}</div>;
+    const defaultQuestions: CodingQuestion[] = [
+      {
+        id: "two-sum-python",
+        title: "Two Sum",
+        problem_statement: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+        difficulty: "easy",
+        starter_code: "def two_sum(nums, target):\n    # Write your solution here\n    pass",
+      },
+      {
+        id: "sql-active-users",
+        title: "Active Users Query",
+        problem_statement: "Write a SQL query returning users who have logged in during the last 30 days.",
+        difficulty: "easy",
+        starter_code: "SELECT user_id, email\nFROM users\nWHERE last_login >= NOW() - INTERVAL '30 days';",
+      },
+    ];
+    setQuestions(defaultQuestions);
+    setSelected(defaultQuestions[0]);
+    setCode(defaultQuestions[0].starter_code || "");
+    setLoading(false);
+  }, []);
+
+  const choose = (question: CodingQuestion) => {
+    setSelected(question);
+    setCode(question.starter_code || "");
+    setResult(null);
+  };
+
+  const handleGenerateQuestion = async () => {
+    if (!targetJobId.trim()) {
+      toast.error("Please enter a valid Job ID to tailor the coding challenge");
+      return;
+    }
+    setIsGenerating(true);
+    try {
+      const res = await codingApi.generateQuestion({
+        job_id: targetJobId.trim(),
+        difficulty: targetDifficulty,
+      });
+      setQuestions((prev) => [res.question, ...prev]);
+      setSelected(res.question);
+      setCode(res.question.starter_code || "");
+      setResult(null);
+      toast.success(`AI Coding Challenge generated: ${res.question.title}`);
+    } catch (err: any) {
+      toast.error(err.response?.data?.detail || "Failed to generate AI coding question");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleSubmitCode = async () => {
+    if (!selected || !code.trim()) return;
+    setSubmitting(true);
+    try {
+      const feedback = await codingApi.submitCodeForReview({
+        question_id: selected.id,
+        language,
+        code: code.trim(),
+      });
+      setResult(feedback);
+      toast.success("Static AI Code Review completed!");
+    } catch (err: any) {
+      toast.error(err.response?.data?.detail || "Failed to analyze submitted code");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto p-4 sm:p-6">
+      {/* Mandatory Human Decision Support Trust Badge (Checklist #11) */}
+      <HumanDecisionTrustBadge message="AI Code Review feedback (Big-O analysis, edge case checks, syntax validation) is an explainable decision-support signal. Code is statically analyzed without sandbox execution." />
+
+      {/* Header Banner */}
+      <div className="glass-card p-6 sm:p-8 rounded-3xl border border-border/60 bg-gradient-to-r from-emerald-950/20 via-background to-cyan-950/20 relative overflow-hidden">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+              <Sparkles className="size-3.5" />
+              <span>Phase 7 — AI Static Code Review & Complexity Analysis</span>
+            </div>
+            <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
+              Coding Challenge & Code Quality Studio
+            </h1>
+            <p className="text-sm text-muted-foreground max-w-2xl">
+              Submit solution code for static AI review assessing logical correctness, edge cases/bugs, syntax validity, and Big-O time & space complexity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

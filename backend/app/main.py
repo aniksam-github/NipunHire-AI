@@ -20,8 +20,10 @@ from app.api.notifications import router as notifications_router
 from app.api.candidate_intelligence import router as candidate_intelligence_router
 from app.api.recruiter import router as recruiter_router
 from app.api.research import router as research_router
+from app.api.audit_logs import router as audit_logs_router
 from app.core.config import settings
 from app.core.exception_handlers import register_exception_handlers
+from app.core.rate_limit import RateLimiterMiddleware
 from app.db.mongodb import connect_to_mongo, close_mongo_connection
 
 logging.basicConfig(level=logging.INFO)
@@ -53,6 +55,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(RateLimiterMiddleware)
+
 # ---- API Routers ----
 app.include_router(auth_router, prefix="/api/v1")
 app.include_router(jobs_router, prefix="/api/v1")
@@ -70,6 +74,7 @@ app.include_router(notifications_router, prefix="/api/v1")
 app.include_router(candidate_intelligence_router, prefix="/api/v1")
 app.include_router(recruiter_router, prefix="/api/v1")
 app.include_router(research_router, prefix="/api/v1")
+app.include_router(audit_logs_router, prefix="/api/v1")
 
 
 @app.get("/")
