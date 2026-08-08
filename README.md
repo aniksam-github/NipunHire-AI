@@ -228,15 +228,21 @@ uvicorn app.main:app --reload
 ```
 Backend API will run live at `http://localhost:8000`.
 
-### Step 3: Frontend Setup
+### Step 4: Docker & Nginx Horizontal Scaling (Load Balanced Setup)
+
+Launch multiple backend replicas behind an Nginx round-robin reverse proxy load balancer:
 
 ```bash
-cd ../frontend
-npm install
-cp .env.example .env
-npm run dev
+# Start Nginx load balancer, MongoDB, and 3 FastAPI backend replicas
+docker-compose up --build --scale backend=3 -d
+
+# Verify container status
+docker-compose ps
 ```
-Frontend development server will run live at `http://localhost:5173`.
+
+- **Nginx Load Balancer**: Listens externally at `http://localhost:8000` (proxying traffic across `http://backend:8000` replicas).
+- **Backend Port Isolation**: Backend container ports are isolated on `nipunhire-network` and are not directly exposed to the host machine.
+- **Automated Health Checks**: Container health checks (`/health`) ensure traffic is only routed to ready and healthy backend instances.
 
 ---
 
@@ -265,7 +271,7 @@ FastAPI automatically generates interactive API documentation:
 The backend test suite covers schema validation, service workflows, deterministic ranking algorithms, statistical bias auditing, and role authorization.
 
 ```bash
-# Run full backend test suite
+# Run full backend unit & integration test suite
 cd backend
 python -m unittest discover -s tests
 ```
@@ -278,6 +284,97 @@ OK
 
 > [!NOTE]
 > All unit tests execute deterministically without making live network calls to external LLM providers.
+
+### 🎯 AI Feature Evaluation Pipeline
+
+NipunHire AI includes an enterprise developer evaluation pipeline to measure output quality against a fixed golden dataset of **17 structured test cases** across **resume parsing**, **resume matching**, and **resume screening**. It prevents prompt regressions before shipping changes.
+
+#### **Key Features**:
+* **Golden Dataset**: 17 structured test cases (`backend/eval/dataset/`) containing sample resume texts, job descriptions, and human-defined criteria.
+* **Dual Check Strategy**:
+  1. **Deterministic Checks**: Validates numeric score ranges, required fields, custom field matching rules, and skill/keyword occurrences.
+  2. **AI-Judge Check**: Reuses `AIService` to grade output reasoning coherence and technical specificity on a 1-5 rubric.
+* **Token & Cost Tracking**: Accumulates exact prompt + completion tokens captured by `AIService` and calculates estimated run cost ($ USD).
+* **Persistence & Trend Analysis**: Saves run reports to `backend/eval/runs/` and compares latest run against previous runs to highlight pass rate trends, recoveries, and regressions.
+
+#### **Running the Evaluation CLI**:
+
+```bash
+cd backend
+
+# Run complete evaluation pipeline (all 17 test cases)
+python -m eval.run_evaluation
+
+# Run evaluation for a specific AI feature
+python -m eval.run_evaluation --feature resume_matching
+
+# Fast deterministic-only evaluation (skips AI judge LLM calls)
+python -m eval.run_evaluation --skip-judge
+
+# Detailed output per test case
+python -m eval.run_evaluation --verbose
+```
+
+#### **Sample Evaluation Report**:
+```text
+================================================================================
+ NIPUNHIRE AI FEATURE EVALUATION REPORT 
+================================================================================
+Run ID:         run_20260804_075848
+Timestamp:      2026-08-04T07:58:48.438406+00:00
+Model Version:  gpt-4o-mini
+Duration:       3.89 seconds
+--------------------------------------------------------------------------------
+FEATURE SUMMARY:
+  * resume_matching     : 6/6 passed (100.0%)
+  * resume_parsing      : 6/6 passed (100.0%)
+  * resume_screening    : 5/5 passed (100.0%)
+--------------------------------------------------------------------------------
+AGGREGATE METRICS:
+  * Total Test Cases : 17
+  * Passed Cases     : 17
+  * Failed Cases     : 0
+  * Aggregate Pass Rate: 100.00%
+
+TOKEN USAGE & COST ESTIMATION:
+  * Prompt Tokens    : 7,650
+  * Completion Tokens: 3,740
+  * Total Tokens     : 11,390
+  * Estimated Cost   : $0.003391 USD
+--------------------------------------------------------------------------------
+HISTORICAL COMPARISON (vs Previous Run):
+  * Previous Pass Rate: 100.00%
+  * Pass Rate Change  : +0.00%
+  * Regressions: None
+================================================================================
+```
+
+#### **Adding New Golden Test Cases**:
+To add a new golden test case, simply add a JSON entry to the appropriate file in `backend/eval/dataset/` (`parsing_cases.json`, `matching_cases.json`, or `screening_cases.json`) without modifying runner code:
+
+```json
+{
+  "id": "match_007_custom_role",
+  "feature": "resume_matching",
+  "description": "Description of candidate and target job",
+  "input": {
+    "resume_text": "Sample resume text...",
+    "job_details": {
+      "title": "Backend Engineer",
+      "required_skills": ["Python", "FastAPI"]
+    }
+  },
+  "expected_criteria": {
+    "score_range": {"min": 80, "max": 100, "field": "overall_match_percentage"},
+    "non_empty_fields": ["overall_match_percentage", "factors"],
+    "required_keywords": ["Python", "FastAPI"],
+    "ai_judge_rubric": {
+      "aspects": ["reasoning_coherence", "specificity"],
+      "min_score": 4
+    }
+  }
+}
+```
 
 ---
 
@@ -295,7 +392,7 @@ The `research data/` directory contains foundational literature and design speci
 
 ## ⚠️ Known Limitations
 
-1. **Rate Limiter Storage**: The default `RateLimiterMiddleware` uses process-local in-memory state (`self._history`). In multi-worker deployments (e.g. `uvicorn main:app --workers 4`) or multi-container Kubernetes replicas, rate limits are enforced per-worker rather than globally. A Redis-backed rate limiter (e.g., using `redis-py` or `limits`) is the recommended production upgrade for horizontally scaled environments.
+1. **In-Memory Rate Limiting Across Load-Balanced Instances**: The default `RateLimiterMiddleware` uses process-local in-memory state (`self._history`). When running multiple backend instances behind the Nginx load balancer (e.g. `docker-compose up --scale backend=3`), rate limit counts are evaluated per-instance rather than shared across the cluster. This is a known, temporary gap until a distributed Redis-backed rate limiter is implemented, not a bug.
 2. **Audit Log Immutability Enforcement**: Audit log immutability is enforced at the **application layer** (the system exposes zero update, patch, or delete HTTP endpoints or repository methods). However, this is not enforced at the database storage engine layer—direct database access or administrative MongoDB commands could still alter or delete records.
 
 ---

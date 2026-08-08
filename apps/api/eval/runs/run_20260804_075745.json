@@ -1,0 +1,1117 @@
+{
+  "run_id": "run_20260804_075745",
+  "timestamp": "2026-08-04T07:57:45.401344+00:00",
+  "model_version": "gpt-4o-mini",
+  "prompt_versions": {
+    "resume_parsing": "2026-07-29 16:27:34",
+    "resume_matching": "2026-07-29 17:50:01",
+    "resume_screening": "2026-07-29 16:49:17"
+  },
+  "total_cases": 17,
+  "passed_cases": 15,
+  "failed_cases": 2,
+  "aggregate_pass_rate": 88.24,
+  "duration_seconds": 4.46,
+  "token_usage": {
+    "prompt_tokens": 7650,
+    "completion_tokens": 3740,
+    "total_tokens": 11390,
+    "estimated_cost_usd": 0.003391
+  },
+  "results": [
+    {
+      "case_id": "match_001_strong_fit_backend",
+      "feature": "resume_matching",
+      "description": "Senior Python/FastAPI developer with 6 years experience matching Senior Backend Engineer job",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[80, 100]",
+          "actual": 90,
+          "message": "Score 90 within range [80, 100]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "90",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (score_reasoning)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Candidate score is 90% based on matched skills ['P",
+          "message": "Field 'score_reasoning' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (factors)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[MatchFactor(name='Required Technical Skills', poi",
+          "message": "Field 'factors' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (Python)",
+          "passed": true,
+          "expected": "Python",
+          "actual": "present",
+          "message": "Keyword 'Python' found in response output"
+        },
+        {
+          "name": "required_keyword (FastAPI)",
+          "passed": true,
+          "expected": "FastAPI",
+          "actual": "present",
+          "message": "Keyword 'FastAPI' found in response output"
+        },
+        {
+          "name": "field_rule (overall_match_percentage gte 80)",
+          "passed": true,
+          "expected": "gte 80",
+          "actual": "90",
+          "message": "Rule 'overall_match_percentage gte 80' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 2.479,
+      "error": null
+    },
+    {
+      "case_id": "match_002_partial_fit_missing_skills",
+      "feature": "resume_matching",
+      "description": "Frontend React developer matching Full Stack Role missing Node.js and GraphQL",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[40, 75]",
+          "actual": 60,
+          "message": "Score 60 within range [40, 75]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "60",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (missing_skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Node.js', 'GraphQL']",
+          "message": "Field 'missing_skills' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (factors)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[MatchFactor(name='Core Skills', point_contributio",
+          "message": "Field 'factors' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (Node.js)",
+          "passed": true,
+          "expected": "Node.js",
+          "actual": "present",
+          "message": "Keyword 'Node.js' found in response output"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 1.26,
+      "error": null
+    },
+    {
+      "case_id": "match_003_poor_fit_mismatched_role",
+      "feature": "resume_matching",
+      "description": "Graphic Designer profile matching C++ Kernel System Engineer job",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[0, 35]",
+          "actual": 20,
+          "message": "Score 20 within range [0, 35]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "20",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (missing_skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Linux', 'Assembly', 'C++', 'System Design', 'Ker",
+          "message": "Field 'missing_skills' is present and non-empty"
+        },
+        {
+          "name": "field_rule (overall_match_percentage lte 35)",
+          "passed": true,
+          "expected": "lte 35",
+          "actual": "20",
+          "message": "Rule 'overall_match_percentage lte 35' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 1.215,
+      "error": null
+    },
+    {
+      "case_id": "match_004_junior_applying_senior",
+      "feature": "resume_matching",
+      "description": "1-year experience junior developer matching Lead System Architect job requiring 10+ years",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[20, 60]",
+          "actual": 60,
+          "message": "Score 60 within range [20, 60]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "60",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (factors)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[MatchFactor(name='Core Skills', point_contributio",
+          "message": "Field 'factors' is present and non-empty"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 1.225,
+      "error": null
+    },
+    {
+      "case_id": "match_005_overqualified_lead",
+      "feature": "resume_matching",
+      "description": "Staff Architect matching Mid-level Backend Engineer job",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[75, 100]",
+          "actual": 90,
+          "message": "Score 90 within range [75, 100]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "90",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (factors)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[MatchFactor(name='Required Technical Skills', poi",
+          "message": "Field 'factors' is present and non-empty"
+        },
+        {
+          "name": "field_rule (overall_match_percentage gte 75)",
+          "passed": true,
+          "expected": "gte 75",
+          "actual": "90",
+          "message": "Rule 'overall_match_percentage gte 75' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 1.256,
+      "error": null
+    },
+    {
+      "case_id": "match_006_exact_skill_alignment",
+      "feature": "resume_matching",
+      "description": "ML Research Engineer profile matching Computer Vision AI Engineer role with PyTorch & OpenCV",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (overall_match_percentage)",
+          "passed": true,
+          "expected": "[85, 100]",
+          "actual": 90,
+          "message": "Score 90 within range [85, 100]"
+        },
+        {
+          "name": "non_empty_field (overall_match_percentage)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "90",
+          "message": "Field 'overall_match_percentage' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (score_reasoning)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Candidate score is 90% based on matched skills ['P",
+          "message": "Field 'score_reasoning' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (factors)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[MatchFactor(name='Required Technical Skills', poi",
+          "message": "Field 'factors' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (PyTorch)",
+          "passed": true,
+          "expected": "PyTorch",
+          "actual": "present",
+          "message": "Keyword 'PyTorch' found in response output"
+        },
+        {
+          "name": "required_keyword (OpenCV)",
+          "passed": true,
+          "expected": "OpenCV",
+          "actual": "present",
+          "message": "Keyword 'OpenCV' found in response output"
+        },
+        {
+          "name": "field_rule (overall_match_percentage gte 85)",
+          "passed": true,
+          "expected": "gte 85",
+          "actual": "90",
+          "message": "Rule 'overall_match_percentage gte 85' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.651,
+      "error": null
+    },
+    {
+      "case_id": "parse_001_full_stack_dev",
+      "feature": "resume_parsing",
+      "description": "Senior Full-Stack Engineer with complete contact details, education, skills, and work experience",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Alex Morgan",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "alex.morgan@example.com",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.phone)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "+1-555-019-2834",
+          "message": "Field 'contact.phone' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (education)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeEducation(institution='Stanford University'",
+          "message": "Field 'education' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['AWS', 'CI/CD', 'CSS3', 'Django', 'Docker', 'Expr",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (experience)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeExperience(company='TechCorp Inc', title='S",
+          "message": "Field 'experience' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (Python)",
+          "passed": true,
+          "expected": "Python",
+          "actual": "present",
+          "message": "Keyword 'Python' found in response output"
+        },
+        {
+          "name": "required_keyword (FastAPI)",
+          "passed": true,
+          "expected": "FastAPI",
+          "actual": "present",
+          "message": "Keyword 'FastAPI' found in response output"
+        },
+        {
+          "name": "required_keyword (React)",
+          "passed": true,
+          "expected": "React",
+          "actual": "present",
+          "message": "Keyword 'React' found in response output"
+        },
+        {
+          "name": "required_keyword (PostgreSQL)",
+          "passed": true,
+          "expected": "PostgreSQL",
+          "actual": "present",
+          "message": "Keyword 'PostgreSQL' found in response output"
+        },
+        {
+          "name": "required_keyword (Docker)",
+          "passed": true,
+          "expected": "Docker",
+          "actual": "present",
+          "message": "Keyword 'Docker' found in response output"
+        },
+        {
+          "name": "field_rule (contact.email equals alex.morgan@example.com)",
+          "passed": true,
+          "expected": "equals alex.morgan@example.com",
+          "actual": "alex.morgan@example.com",
+          "message": "Rule 'contact.email equals alex.morgan@example.com' satisfied"
+        },
+        {
+          "name": "field_rule (contact.phone contains 555-019-2834)",
+          "passed": true,
+          "expected": "contains 555-019-2834",
+          "actual": "+1-555-019-2834",
+          "message": "Rule 'contact.phone contains 555-019-2834' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.652,
+      "error": null
+    },
+    {
+      "case_id": "parse_002_data_scientist",
+      "feature": "resume_parsing",
+      "description": "Data Scientist with Master's degree, PyTorch/TensorFlow expertise, and missing phone number",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Dr. Elena Rostova",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "elena.rostova@ai-labs.org",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (education)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeEducation(institution='Stanford University'",
+          "message": "Field 'education' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Deep Learning', 'Machine Learning', 'NLP', 'NumP",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (PyTorch)",
+          "passed": true,
+          "expected": "PyTorch",
+          "actual": "present",
+          "message": "Keyword 'PyTorch' found in response output"
+        },
+        {
+          "name": "required_keyword (TensorFlow)",
+          "passed": true,
+          "expected": "TensorFlow",
+          "actual": "present",
+          "message": "Keyword 'TensorFlow' found in response output"
+        },
+        {
+          "name": "required_keyword (Pandas)",
+          "passed": true,
+          "expected": "Pandas",
+          "actual": "present",
+          "message": "Keyword 'Pandas' found in response output"
+        },
+        {
+          "name": "required_keyword (NLP)",
+          "passed": true,
+          "expected": "NLP",
+          "actual": "present",
+          "message": "Keyword 'NLP' found in response output"
+        },
+        {
+          "name": "field_rule (contact.email equals elena.rostova@ai-labs.org)",
+          "passed": true,
+          "expected": "equals elena.rostova@ai-labs.org",
+          "actual": "elena.rostova@ai-labs.org",
+          "message": "Rule 'contact.email equals elena.rostova@ai-labs.org' satisfied"
+        },
+        {
+          "name": "field_rule (contact.phone is_none None)",
+          "passed": true,
+          "expected": "is_none None",
+          "actual": "None",
+          "message": "Rule 'contact.phone is_none None' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.681,
+      "error": null
+    },
+    {
+      "case_id": "parse_003_devops_engineer",
+      "feature": "resume_parsing",
+      "description": "Cloud DevOps & Platform Engineer with Kubernetes, Terraform, and AWS focus",
+      "passed": false,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Marcus Vance",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "marcus.vance@devops-guru.io",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['AWS', 'Bash', 'CI/CD', 'Docker', 'GCP', 'Kuberne",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (experience)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeExperience(company='TechCorp Inc', title='S",
+          "message": "Field 'experience' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (AWS)",
+          "passed": true,
+          "expected": "AWS",
+          "actual": "present",
+          "message": "Keyword 'AWS' found in response output"
+        },
+        {
+          "name": "required_keyword (Docker)",
+          "passed": true,
+          "expected": "Docker",
+          "actual": "present",
+          "message": "Keyword 'Docker' found in response output"
+        },
+        {
+          "name": "required_keyword (Kubernetes)",
+          "passed": true,
+          "expected": "Kubernetes",
+          "actual": "present",
+          "message": "Keyword 'Kubernetes' found in response output"
+        },
+        {
+          "name": "required_keyword (Terraform)",
+          "passed": false,
+          "expected": "Terraform",
+          "actual": "absent",
+          "message": "Keyword 'Terraform' missing from response output"
+        },
+        {
+          "name": "required_keyword (Linux)",
+          "passed": true,
+          "expected": "Linux",
+          "actual": "present",
+          "message": "Keyword 'Linux' found in response output"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.647,
+      "error": null
+    },
+    {
+      "case_id": "parse_004_junior_frontend",
+      "feature": "resume_parsing",
+      "description": "Junior Frontend Developer with CS degree, React projects, but 0 professional work experience",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "Priya Sharma",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "priya.sharma@techgrad.com",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (education)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeEducation(institution='Stanford University'",
+          "message": "Field 'education' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['CSS3', 'Git', 'HTML5', 'JavaScript', 'REST API',",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (projects)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeProject(name='Portfolio Web App', descripti",
+          "message": "Field 'projects' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (React)",
+          "passed": true,
+          "expected": "React",
+          "actual": "present",
+          "message": "Keyword 'React' found in response output"
+        },
+        {
+          "name": "required_keyword (TypeScript)",
+          "passed": true,
+          "expected": "TypeScript",
+          "actual": "present",
+          "message": "Keyword 'TypeScript' found in response output"
+        },
+        {
+          "name": "required_keyword (HTML5)",
+          "passed": true,
+          "expected": "HTML5",
+          "actual": "present",
+          "message": "Keyword 'HTML5' found in response output"
+        },
+        {
+          "name": "required_keyword (CSS3)",
+          "passed": true,
+          "expected": "CSS3",
+          "actual": "present",
+          "message": "Keyword 'CSS3' found in response output"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.637,
+      "error": null
+    },
+    {
+      "case_id": "parse_005_career_switcher",
+      "feature": "resume_parsing",
+      "description": "Career switcher from Finance to Backend Engineering via Coding Bootcamp",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "David Miller",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "david.miller@codereswitch.com",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (education)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeEducation(institution='Stanford University'",
+          "message": "Field 'education' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Django', 'Flask', 'Git', 'JavaScript', 'PostgreS",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (experience)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "[ResumeExperience(company='TechCorp Inc', title='S",
+          "message": "Field 'experience' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (Python)",
+          "passed": true,
+          "expected": "Python",
+          "actual": "present",
+          "message": "Keyword 'Python' found in response output"
+        },
+        {
+          "name": "required_keyword (Django)",
+          "passed": true,
+          "expected": "Django",
+          "actual": "present",
+          "message": "Keyword 'Django' found in response output"
+        },
+        {
+          "name": "required_keyword (PostgreSQL)",
+          "passed": true,
+          "expected": "PostgreSQL",
+          "actual": "present",
+          "message": "Keyword 'PostgreSQL' found in response output"
+        },
+        {
+          "name": "required_keyword (SQL)",
+          "passed": true,
+          "expected": "SQL",
+          "actual": "present",
+          "message": "Keyword 'SQL' found in response output"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.662,
+      "error": null
+    },
+    {
+      "case_id": "parse_006_sparse_contact_info",
+      "feature": "resume_parsing",
+      "description": "Minimalist resume with name and email only, no phone, address, or LinkedIn URL",
+      "passed": false,
+      "deterministic_checks": [
+        {
+          "name": "non_empty_field (full_name)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "John Doe",
+          "message": "Field 'full_name' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (contact.email)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "john.doe@minimal.net",
+          "message": "Field 'contact.email' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (skills)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Go', 'Linux', 'SQL', 'System Design']",
+          "message": "Field 'skills' is present and non-empty"
+        },
+        {
+          "name": "required_keyword (Go)",
+          "passed": true,
+          "expected": "Go",
+          "actual": "present",
+          "message": "Keyword 'Go' found in response output"
+        },
+        {
+          "name": "required_keyword (C++)",
+          "passed": false,
+          "expected": "C++",
+          "actual": "absent",
+          "message": "Keyword 'C++' missing from response output"
+        },
+        {
+          "name": "required_keyword (System Design)",
+          "passed": true,
+          "expected": "System Design",
+          "actual": "present",
+          "message": "Keyword 'System Design' found in response output"
+        },
+        {
+          "name": "field_rule (contact.email equals john.doe@minimal.net)",
+          "passed": true,
+          "expected": "equals john.doe@minimal.net",
+          "actual": "john.doe@minimal.net",
+          "message": "Rule 'contact.email equals john.doe@minimal.net' satisfied"
+        },
+        {
+          "name": "field_rule (contact.phone is_none None)",
+          "passed": true,
+          "expected": "is_none None",
+          "actual": "None",
+          "message": "Rule 'contact.phone is_none None' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.665,
+      "error": null
+    },
+    {
+      "case_id": "screen_001_senior_engineer",
+      "feature": "resume_screening",
+      "description": "Senior Full-Stack Engineer profile evaluation for ATS compatibility and strategic improvements",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (ats_compatibility_score)",
+          "passed": true,
+          "expected": "[70, 100]",
+          "actual": 85,
+          "message": "Score 85 within range [70, 100]"
+        },
+        {
+          "name": "non_empty_field (strengths)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Strong technical skill set', 'Quantified achieve",
+          "message": "Field 'strengths' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (ats_compatibility_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'ats_compatibility_score' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (improvement_suggestions)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Add quantifiable metrics to bullet points', 'Inc",
+          "message": "Field 'improvement_suggestions' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (confidence_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'confidence_score' is present and non-empty"
+        },
+        {
+          "name": "field_rule (ats_compatibility_score gte 70)",
+          "passed": true,
+          "expected": "gte 70",
+          "actual": "85",
+          "message": "Rule 'ats_compatibility_score gte 70' satisfied"
+        },
+        {
+          "name": "field_rule (confidence_score gte 75)",
+          "passed": true,
+          "expected": "gte 75",
+          "actual": "85",
+          "message": "Rule 'confidence_score gte 75' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.635,
+      "error": null
+    },
+    {
+      "case_id": "screen_002_junior_dev",
+      "feature": "resume_screening",
+      "description": "Junior React developer with limited experience needing targeted resume improvements",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (ats_compatibility_score)",
+          "passed": true,
+          "expected": "[40, 75]",
+          "actual": 65,
+          "message": "Score 65 within range [40, 75]"
+        },
+        {
+          "name": "non_empty_field (strengths)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Strong academic computer science background', 'D",
+          "message": "Field 'strengths' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (weaknesses)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Limited professional industry work experience']",
+          "message": "Field 'weaknesses' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (improvement_suggestions)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Add quantifiable metrics to bullet points', 'Inc",
+          "message": "Field 'improvement_suggestions' is present and non-empty"
+        },
+        {
+          "name": "field_rule (ats_compatibility_score gte 40)",
+          "passed": true,
+          "expected": "gte 40",
+          "actual": "65",
+          "message": "Rule 'ats_compatibility_score gte 40' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.65,
+      "error": null
+    },
+    {
+      "case_id": "screen_003_sparse_profile",
+      "feature": "resume_screening",
+      "description": "Sparse profile missing work experience and formatted bullet points",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (ats_compatibility_score)",
+          "passed": true,
+          "expected": "[0, 60]",
+          "actual": 45,
+          "message": "Score 45 within range [0, 60]"
+        },
+        {
+          "name": "non_empty_field (weaknesses)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Missing detailed experience bullet points and im",
+          "message": "Field 'weaknesses' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (improvement_suggestions)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Add quantifiable metrics to bullet points', 'Inc",
+          "message": "Field 'improvement_suggestions' is present and non-empty"
+        },
+        {
+          "name": "field_rule (ats_compatibility_score lte 60)",
+          "passed": true,
+          "expected": "lte 60",
+          "actual": "45",
+          "message": "Rule 'ats_compatibility_score lte 60' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.66,
+      "error": null
+    },
+    {
+      "case_id": "screen_004_fullstack_lead",
+      "feature": "resume_screening",
+      "description": "Tech Lead profile with strong leadership and technical expertise",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (ats_compatibility_score)",
+          "passed": true,
+          "expected": "[75, 100]",
+          "actual": 85,
+          "message": "Score 85 within range [75, 100]"
+        },
+        {
+          "name": "non_empty_field (strengths)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Strong technical skill set', 'Quantified achieve",
+          "message": "Field 'strengths' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (ats_compatibility_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'ats_compatibility_score' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (confidence_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'confidence_score' is present and non-empty"
+        },
+        {
+          "name": "field_rule (ats_compatibility_score gte 75)",
+          "passed": true,
+          "expected": "gte 75",
+          "actual": "85",
+          "message": "Rule 'ats_compatibility_score gte 75' satisfied"
+        },
+        {
+          "name": "field_rule (confidence_score gte 75)",
+          "passed": true,
+          "expected": "gte 75",
+          "actual": "85",
+          "message": "Rule 'confidence_score gte 75' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.671,
+      "error": null
+    },
+    {
+      "case_id": "screen_005_data_engineer",
+      "feature": "resume_screening",
+      "description": "Data Scientist & AI Researcher profile screening",
+      "passed": true,
+      "deterministic_checks": [
+        {
+          "name": "score_range (ats_compatibility_score)",
+          "passed": true,
+          "expected": "[70, 100]",
+          "actual": 85,
+          "message": "Score 85 within range [70, 100]"
+        },
+        {
+          "name": "non_empty_field (strengths)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "['Strong technical skill set', 'Quantified achieve",
+          "message": "Field 'strengths' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (ats_compatibility_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'ats_compatibility_score' is present and non-empty"
+        },
+        {
+          "name": "non_empty_field (confidence_score)",
+          "passed": true,
+          "expected": "non-empty value",
+          "actual": "85",
+          "message": "Field 'confidence_score' is present and non-empty"
+        },
+        {
+          "name": "field_rule (ats_compatibility_score gte 70)",
+          "passed": true,
+          "expected": "gte 70",
+          "actual": "85",
+          "message": "Rule 'ats_compatibility_score gte 70' satisfied"
+        }
+      ],
+      "ai_judge_check": {
+        "name": "ai_judge_quality",
+        "passed": true,
+        "expected": "coherence >= 4, specificity >= 4",
+        "actual": "coherence: 5, specificity: 5",
+        "message": "Mock AI Judge: Response reasoning is coherent and specific."
+      },
+      "execution_time_seconds": 0.644,
+      "error": null
+    }
+  ]
+}

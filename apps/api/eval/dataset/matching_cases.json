@@ -1,0 +1,167 @@
+[
+  {
+    "id": "match_001_strong_fit_backend",
+    "feature": "resume_matching",
+    "description": "Senior Python/FastAPI developer with 6 years experience matching Senior Backend Engineer job",
+    "input": {
+      "resume_text": "Alex Morgan\nEmail: alex.morgan@example.com\nSUMMARY\nSenior Full-Stack Software Engineer with 6+ years of experience building scalable backend services with Python, FastAPI, PostgreSQL, and Redis.\n\nEXPERIENCE\nSenior Software Engineer — TechCorp Inc (2021 - Present)\n- Architected high-throughput REST APIs using Python and FastAPI handling 20M+ requests per day.\n- Designed PostgreSQL schema and query optimizations reducing latency by 40%.\n\nSKILLS\nPython, FastAPI, Django, PostgreSQL, Redis, Docker, REST API, Microservices",
+      "job_details": {
+        "title": "Senior Backend Engineer",
+        "department": "Engineering",
+        "location": "Remote / San Francisco",
+        "min_experience_years": 5,
+        "required_skills": ["Python", "FastAPI", "PostgreSQL"],
+        "optional_skills": ["Redis", "Docker", "Microservices"],
+        "description": "We are seeking a Senior Backend Engineer to architect scalable REST microservices in Python and FastAPI with PostgreSQL databases."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 80, "max": 100, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "score_reasoning", "factors"],
+      "required_keywords": ["Python", "FastAPI"],
+      "field_rules": [
+        {"field_path": "overall_match_percentage", "operator": "gte", "value": 80}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "match_002_partial_fit_missing_skills",
+    "feature": "resume_matching",
+    "description": "Frontend React developer matching Full Stack Role missing Node.js and GraphQL",
+    "input": {
+      "resume_text": "Priya Sharma\nEmail: priya.sharma@techgrad.com\nEDUCATION\nB.S. in Computer Science, UC Berkeley (2020 - 2024)\nSKILLS\nReact, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Git\nPROJECTS\nBuilt single-page frontend apps using React and TypeScript.",
+      "job_details": {
+        "title": "Full Stack Engineer",
+        "department": "Engineering",
+        "location": "New York, NY",
+        "min_experience_years": 3,
+        "required_skills": ["React", "Node.js", "GraphQL", "TypeScript"],
+        "optional_skills": ["PostgreSQL", "Docker"],
+        "description": "Full Stack Engineer needed to work across React frontend and Node.js GraphQL backend microservices."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 40, "max": 75, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "missing_skills", "factors"],
+      "required_keywords": ["Node.js"],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "match_003_poor_fit_mismatched_role",
+    "feature": "resume_matching",
+    "description": "Graphic Designer profile matching C++ Kernel System Engineer job",
+    "input": {
+      "resume_text": "Chloe Bennett\nEmail: chloe.b@creative.com\nSUMMARY\nSenior UI/UX & Graphic Designer with 8 years of experience creating visual brand assets, logos, and Figma wireframes.\nSKILLS\nPhotoshop, Illustrator, Figma, InDesign, Branding, UI/UX Design",
+      "job_details": {
+        "title": "Senior C++ Linux Kernel Engineer",
+        "department": "Infrastructure",
+        "location": "Austin, TX",
+        "min_experience_years": 7,
+        "required_skills": ["C++", "Linux", "Kernel", "System Design", "Assembly"],
+        "optional_skills": ["C", "GDB", "Bash"],
+        "description": "Deep low-level C++ kernel engineer required to optimize memory management and OS scheduler."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 0, "max": 35, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "missing_skills"],
+      "field_rules": [
+        {"field_path": "overall_match_percentage", "operator": "lte", "value": 35}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "match_004_junior_applying_senior",
+    "feature": "resume_matching",
+    "description": "1-year experience junior developer matching Lead System Architect job requiring 10+ years",
+    "input": {
+      "resume_text": "David Miller\nEmail: david.m@juniordev.com\nEXPERIENCE\nJunior Developer — FinTech (2023 - 2024)\n- Worked on basic Python and SQL scripts.\nSKILLS\nPython, SQL, Django, Git",
+      "job_details": {
+        "title": "Principal Lead System Architect",
+        "department": "Architecture",
+        "location": "Remote",
+        "min_experience_years": 10,
+        "required_skills": ["Python", "Kubernetes", "System Design", "Microservices", "Cloud Architecture"],
+        "optional_skills": ["Go", "Kafka"],
+        "description": "Principal Lead Architect to oversee global multi-cloud infrastructure and technical strategy across 100+ engineers."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 20, "max": 60, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "factors"],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "match_005_overqualified_lead",
+    "feature": "resume_matching",
+    "description": "Staff Architect matching Mid-level Backend Engineer job",
+    "input": {
+      "resume_text": "Marcus Vance\nEmail: marcus.vance@devops-guru.io\nSUMMARY\n12+ years experience in Cloud Architecture, AWS, Kubernetes, Terraform, and Python backend services.\nSKILLS\nAWS, GCP, Docker, Kubernetes, Linux, Bash, Python, Terraform, CI/CD, Microservices",
+      "job_details": {
+        "title": "Mid-Level Backend Engineer",
+        "department": "Engineering",
+        "location": "Chicago, IL",
+        "min_experience_years": 3,
+        "required_skills": ["Python", "AWS", "Docker"],
+        "optional_skills": ["Kubernetes", "Linux"],
+        "description": "Mid-level engineer to assist with backend Python service integration and AWS Docker container deployment."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 75, "max": 100, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "factors"],
+      "field_rules": [
+        {"field_path": "overall_match_percentage", "operator": "gte", "value": 75}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "match_006_exact_skill_alignment",
+    "feature": "resume_matching",
+    "description": "ML Research Engineer profile matching Computer Vision AI Engineer role with PyTorch & OpenCV",
+    "input": {
+      "resume_text": "Dr. Elena Rostova\nEmail: elena.rostova@ai-labs.org\nSUMMARY\nLead Machine Learning Scientist specializing in Deep Learning, PyTorch, TensorFlow, OpenCV, and Computer Vision.\nSKILLS\nPython, PyTorch, TensorFlow, scikit-learn, OpenCV, NLP, Deep Learning, SQL",
+      "job_details": {
+        "title": "Computer Vision AI Engineer",
+        "department": "AI Research",
+        "location": "Boston, MA",
+        "min_experience_years": 4,
+        "required_skills": ["PyTorch", "OpenCV", "Python", "Deep Learning"],
+        "optional_skills": ["TensorFlow", "scikit-learn"],
+        "description": "We need a Computer Vision AI Engineer skilled in PyTorch, OpenCV, and deep neural networks for real-time video inference."
+      }
+    },
+    "expected_criteria": {
+      "score_range": {"min": 85, "max": 100, "field": "overall_match_percentage"},
+      "non_empty_fields": ["overall_match_percentage", "score_reasoning", "factors"],
+      "required_keywords": ["PyTorch", "OpenCV"],
+      "field_rules": [
+        {"field_path": "overall_match_percentage", "operator": "gte", "value": 85}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  }
+]

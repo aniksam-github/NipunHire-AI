@@ -29,3 +29,7 @@ Thumbs.db
 
 backend/uploads/
 uploads/
+node_modules/
+.turbo/
+dist/
+build/

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "screen_001_senior_engineer",
+    "feature": "resume_screening",
+    "description": "Senior Full-Stack Engineer profile evaluation for ATS compatibility and strategic improvements",
+    "input": {
+      "resume_text": "Alex Morgan\nEmail: alex.morgan@example.com | Phone: +1-555-019-2834 | Location: San Francisco, CA\n\nSUMMARY\nSenior Full-Stack Software Engineer with 6+ years of experience building scalable backend services with Python, FastAPI, PostgreSQL, and modern React frontends.\n\nEDUCATION\nBachelor of Science in Computer Science, Stanford University\n\nSKILLS\nPython, FastAPI, Django, React, TypeScript, Node.js, HTML5, CSS3, PostgreSQL, Redis, MongoDB, Docker, Kubernetes, Git, AWS\n\nEXPERIENCE\nSenior Software Engineer — TechCorp Inc (2021 - Present)\n- Architected high-throughput REST APIs using Python and FastAPI handling 20M+ requests per day.\n- Designed PostgreSQL schema and query optimizations reducing latency by 40%."
+    },
+    "expected_criteria": {
+      "score_range": {"min": 70, "max": 100, "field": "ats_compatibility_score"},
+      "non_empty_fields": ["strengths", "ats_compatibility_score", "improvement_suggestions", "confidence_score"],
+      "field_rules": [
+        {"field_path": "ats_compatibility_score", "operator": "gte", "value": 70},
+        {"field_path": "confidence_score", "operator": "gte", "value": 75}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "screen_002_junior_dev",
+    "feature": "resume_screening",
+    "description": "Junior React developer with limited experience needing targeted resume improvements",
+    "input": {
+      "resume_text": "Priya Sharma\nEmail: priya.sharma@techgrad.com | Phone: 987-654-3210\n\nEDUCATION\nB.S. in Computer Science, UC Berkeley (2020 - 2024)\n\nPROJECTS\nPortfolio Web Application\n- Built responsive SPA using React, TypeScript, HTML5, and Tailwind CSS.\n\nSKILLS\nReact, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Git"
+    },
+    "expected_criteria": {
+      "score_range": {"min": 40, "max": 75, "field": "ats_compatibility_score"},
+      "non_empty_fields": ["strengths", "weaknesses", "improvement_suggestions"],
+      "field_rules": [
+        {"field_path": "ats_compatibility_score", "operator": "gte", "value": 40}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "screen_003_sparse_profile",
+    "feature": "resume_screening",
+    "description": "Sparse profile missing work experience and formatted bullet points",
+    "input": {
+      "resume_text": "John Doe\nEmail: john.doe@minimal.net\n\nSUMMARY\nSoftware Engineer interested in Go and System Design.\n\nSKILLS\nGo, C++, Linux, System Design, SQL"
+    },
+    "expected_criteria": {
+      "score_range": {"min": 0, "max": 60, "field": "ats_compatibility_score"},
+      "non_empty_fields": ["weaknesses", "improvement_suggestions"],
+      "field_rules": [
+        {"field_path": "ats_compatibility_score", "operator": "lte", "value": 60}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "screen_004_fullstack_lead",
+    "feature": "resume_screening",
+    "description": "Tech Lead profile with strong leadership and technical expertise",
+    "input": {
+      "resume_text": "Marcus Vance\nEmail: marcus.vance@devops-guru.io | Phone: 415-890-1234\n\nSUMMARY\nLead DevOps Engineer with 12+ years experience building cloud platform infrastructure, CI/CD pipelines, and microservices.\n\nEXPERIENCE\nLead DevOps Engineer — InfraCloud Systems (2020 - Present)\n- Managed AWS infrastructure with Terraform and Ansible.\n- Deployed multi-region Kubernetes clusters with Helm and ArgoCD.\n- Built robust CI/CD automation pipelines using Bash and Python.\n\nSKILLS\nAWS, GCP, Docker, Kubernetes, Linux, Bash, Python, Terraform, CI/CD"
+    },
+    "expected_criteria": {
+      "score_range": {"min": 75, "max": 100, "field": "ats_compatibility_score"},
+      "non_empty_fields": ["strengths", "ats_compatibility_score", "confidence_score"],
+      "field_rules": [
+        {"field_path": "ats_compatibility_score", "operator": "gte", "value": 75},
+        {"field_path": "confidence_score", "operator": "gte", "value": 75}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "screen_005_data_engineer",
+    "feature": "resume_screening",
+    "description": "Data Scientist & AI Researcher profile screening",
+    "input": {
+      "resume_text": "Dr. Elena Rostova\nEmail: elena.rostova@ai-labs.org | Location: Boston, MA\n\nSUMMARY\nLead Machine Learning Research Scientist specializing in NLP, Deep Learning, and Computer Vision using PyTorch and TensorFlow.\n\nEDUCATION\nPh.D. in Artificial Intelligence, MIT\nMaster of Science in Data Science, Carnegie Mellon University\n\nSKILLS\nPython, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, OpenCV, NLP, Deep Learning, SQL\n\nEXPERIENCE\nSenior AI Scientist — DeepMind Labs (2022 - Present)\n- Trained transformer models for document parsing and entity extraction."
+    },
+    "expected_criteria": {
+      "score_range": {"min": 70, "max": 100, "field": "ats_compatibility_score"},
+      "non_empty_fields": ["strengths", "ats_compatibility_score", "confidence_score"],
+      "field_rules": [
+        {"field_path": "ats_compatibility_score", "operator": "gte", "value": 70}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "parse_001_full_stack_dev",
+    "feature": "resume_parsing",
+    "description": "Senior Full-Stack Engineer with complete contact details, education, skills, and work experience",
+    "input": {
+      "resume_text": "Alex Morgan\nEmail: alex.morgan@example.com | Phone: +1-555-019-2834 | Location: San Francisco, CA | LinkedIn: linkedin.com/in/alexmorgan\n\nSUMMARY\nSenior Full-Stack Software Engineer with 6+ years of experience building scalable backend services with Python, FastAPI, PostgreSQL, and modern React frontends.\n\nEDUCATION\nBachelor of Science in Computer Science, Stanford University (2014 - 2018)\n\nSKILLS\nLanguages & Frameworks: Python, FastAPI, Django, React, TypeScript, Node.js, HTML5, CSS3, SQL\nDatabases & Tools: PostgreSQL, Redis, MongoDB, Docker, Kubernetes, Git, AWS\n\nEXPERIENCE\nSenior Software Engineer — TechCorp Inc (2021 - Present)\n- Architected high-throughput REST APIs using Python and FastAPI handling 20M+ requests per day.\n- Designed PostgreSQL schema and query optimizations reducing latency by 40%.\n- Led migration of frontend apps to React and TypeScript with Tailwind CSS.\n\nSoftware Engineer — CloudData Systems (2018 - 2021)\n- Developed microservices in Node.js and Express with MongoDB integration.\n- Implemented CI/CD pipelines using GitHub Actions and AWS EKS."
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "contact.phone", "education", "skills", "experience"],
+      "required_keywords": ["Python", "FastAPI", "React", "PostgreSQL", "Docker"],
+      "field_rules": [
+        {"field_path": "contact.email", "operator": "equals", "value": "alex.morgan@example.com"},
+        {"field_path": "contact.phone", "operator": "contains", "value": "555-019-2834"}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "parse_002_data_scientist",
+    "feature": "resume_parsing",
+    "description": "Data Scientist with Master's degree, PyTorch/TensorFlow expertise, and missing phone number",
+    "input": {
+      "resume_text": "Dr. Elena Rostova\nEmail: elena.rostova@ai-labs.org | Location: Boston, MA\n\nSUMMARY\nLead Machine Learning Research Scientist specializing in NLP, Deep Learning, and Computer Vision using PyTorch and TensorFlow.\n\nEDUCATION\nPh.D. in Artificial Intelligence, MIT (2018 - 2022)\nMaster of Science in Data Science, Carnegie Mellon University (2016 - 2018)\n\nTECHNICAL SKILLS\nPython, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, OpenCV, NLP, Deep Learning, SQL\n\nEXPERIENCE\nSenior AI Scientist — DeepMind Labs (2022 - Present)\n- Trained transformer models for document parsing and entity extraction."
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "education", "skills"],
+      "required_keywords": ["PyTorch", "TensorFlow", "Pandas", "NLP"],
+      "field_rules": [
+        {"field_path": "contact.email", "operator": "equals", "value": "elena.rostova@ai-labs.org"},
+        {"field_path": "contact.phone", "operator": "is_none", "value": null}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "parse_003_devops_engineer",
+    "feature": "resume_parsing",
+    "description": "Cloud DevOps & Platform Engineer with Kubernetes, Terraform, and AWS focus",
+    "input": {
+      "resume_text": "Marcus Vance\nEmail: marcus.vance@devops-guru.io | Phone: 415-890-1234\n\nEXPERIENCE\nLead DevOps Engineer — InfraCloud Systems (2020 - Present)\n- Managed AWS infrastructure with Terraform and Ansible.\n- Deployed multi-region Kubernetes clusters with Helm and ArgoCD.\n- Built robust CI/CD automation pipelines using Bash and Python.\n\nSKILLS\nAWS, GCP, Docker, Kubernetes, Linux, Bash, Python, Terraform, CI/CD"
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "skills", "experience"],
+      "required_keywords": ["AWS", "Docker", "Kubernetes", "Terraform", "Linux"],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "parse_004_junior_frontend",
+    "feature": "resume_parsing",
+    "description": "Junior Frontend Developer with CS degree, React projects, but 0 professional work experience",
+    "input": {
+      "resume_text": "Priya Sharma\nEmail: priya.sharma@techgrad.com | Phone: 987-654-3210\n\nEDUCATION\nB.S. in Computer Science, UC Berkeley (2020 - 2024)\n\nPROJECTS\nPortfolio Web Application\n- Built responsive SPA using React, TypeScript, HTML5, and Tailwind CSS.\n- Integrated REST API for dynamic content fetching.\n\nSKILLS\nReact, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Git"
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "education", "skills", "projects"],
+      "required_keywords": ["React", "TypeScript", "HTML5", "CSS3"],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "parse_005_career_switcher",
+    "feature": "resume_parsing",
+    "description": "Career switcher from Finance to Backend Engineering via Coding Bootcamp",
+    "input": {
+      "resume_text": "David Miller\nEmail: david.miller@codereswitch.com | Phone: 312-555-7890\n\nEDUCATION\nFull Stack Web Development Certificate, App Academy (2023)\nB.S. in Finance, NYU Stern (2015 - 2019)\n\nSKILLS\nPython, Django, Flask, PostgreSQL, SQL, JavaScript, REST API, Git\n\nEXPERIENCE\nJunior Backend Developer — FinTech Startup (2023 - Present)\n- Developed REST API endpoints using Python, Django, and PostgreSQL.\n\nFinancial Analyst — Goldman Sachs (2019 - 2023)\n- Conducted financial modeling and SQL database queries."
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "education", "skills", "experience"],
+      "required_keywords": ["Python", "Django", "PostgreSQL", "SQL"],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  },
+  {
+    "id": "parse_006_sparse_contact_info",
+    "feature": "resume_parsing",
+    "description": "Minimalist resume with name and email only, no phone, address, or LinkedIn URL",
+    "input": {
+      "resume_text": "John Doe\nEmail: john.doe@minimal.net\n\nSUMMARY\nSoftware Engineer with experience in Go, C++, and System Design.\n\nSKILLS\nGo, C++, Linux, System Design, SQL"
+    },
+    "expected_criteria": {
+      "non_empty_fields": ["full_name", "contact.email", "skills"],
+      "required_keywords": ["Go", "C++", "System Design"],
+      "field_rules": [
+        {"field_path": "contact.email", "operator": "equals", "value": "john.doe@minimal.net"},
+        {"field_path": "contact.phone", "operator": "is_none", "value": null}
+      ],
+      "ai_judge_rubric": {
+        "aspects": ["reasoning_coherence", "specificity"],
+        "min_score": 4
+      }
+    }
+  }
+]

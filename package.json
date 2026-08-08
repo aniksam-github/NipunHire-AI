@@ -1,0 +1,17 @@
+{
+  "name": "@nipunhire/monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "preview": "turbo run preview",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "~6.0.2"
+  },
+  "packageManager": "pnpm@11.20.0"
+}
